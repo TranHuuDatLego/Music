@@ -37,7 +37,7 @@
 
 ?>
 
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,6 +99,7 @@
                                 <ul>
                                     <li><a href="index.jsp">Home</a></li>
                                     <li><a href="singer.jsp">Singer</a></li>
+                                    <li><a href="song.jsp">Song</a></li>
                                     <li><a href="event.jsp">Events</a></li>
                                     <li><a href="blog.jsp">News</a></li>
                                     <li><a href="search.jsp">Search</a></li>

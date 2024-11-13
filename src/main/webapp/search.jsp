@@ -11,6 +11,7 @@
     }
 ?>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,7 +70,25 @@
                             </div>
 
                             <!-- Nav Start -->
-                            <?jsp include 'menu.jsp'; ?>
+                            <div class="classynav">
+                                <ul>
+                                    <li><a href="index.jsp">Home</a></li>
+                                    <li><a href="singer.jsp">Singer</a></li>
+                                    <li><a href="song.jsp">Song</a></li>
+                                    <li><a href="event.jsp">Events</a></li>
+                                    <li><a href="blog.jsp">News</a></li>
+                                    <li><a href="search.jsp">Search</a></li>
+                                    <li><a href="contact.jsp">Contact</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50">
+                                        <a href="login.jsp" id="loginBtn">Login / Register</a>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Nav End -->
 
                         </div>

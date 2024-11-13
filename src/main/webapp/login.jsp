@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <?php
     session_start();
     include 'db.php';
@@ -104,12 +106,13 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="index.php">Home</a></li>
-                                    <li><a href="albums-store.php">Albums</a></li>
-                                    <li><a href="event.php">Events</a></li>
-                                    <li><a href="blog.php">News</a></li>
-                                    <li><a href="search.php">Search</a></li>
-                                    <li><a href="contact.php">Contact</a></li>
+                                    <li><a href="index.jsp">Home</a></li>
+                                    <li><a href="singer.jsp">Singer</a></li>
+                                    <li><a href="song.jsp">Song</a></li>
+                                    <li><a href="event.jsp">Events</a></li>
+                                    <li><a href="blog.jsp">News</a></li>
+                                    <li><a href="search.jsp">Search</a></li>
+                                    <li><a href="contact.jsp">Contact</a></li>
                                 </ul>
 
                                 <!-- Login/Register & Cart Button -->

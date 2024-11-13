@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE jsp>
 <jsp lang="en">
 
@@ -57,12 +58,13 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="index.jsp" style="color: rgb(20, 163, 89);">Home</a></li>
-                                    <li><a href="albums-store.jsp" style="color: rgb(20, 163, 89);">Albums</a></li>
-                                    <li><a href="event.jsp" style="color: rgb(20, 163, 89);">Events</a></li>
-                                    <li><a href="blog.jsp" style="color: rgb(20, 163, 89);">News</a></li>
-                                    <li><a href="search.jsp"  style="color: rgb(20, 163, 89);">Search</a></li>
-                                    <li><a href="contact.jsp" style="color: rgb(20, 163, 89);">Contact</a></li>
+                                    <li><a href="index.jsp">Home</a></li>
+                                    <li><a href="singer.jsp">Singer</a></li>
+                                    <li><a href="song.jsp">Song</a></li>
+                                    <li><a href="event.jsp">Events</a></li>
+                                    <li><a href="blog.jsp">News</a></li>
+                                    <li><a href="search.jsp">Search</a></li>
+                                    <li><a href="contact.jsp">Contact</a></li>
                                 </ul>
 
                                 <!-- Login/Register & Cart Button -->

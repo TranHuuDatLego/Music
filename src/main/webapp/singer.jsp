@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,6 +91,7 @@
                                 <ul>
                                     <li><a href="index.jsp">Home</a></li>
                                     <li><a href="singer.jsp">Singer</a></li>
+                                    <li><a href="song.jsp">Song</a></li>
                                     <li><a href="event.jsp">Events</a></li>
                                     <li><a href="blog.jsp">News</a></li>
                                     <li><a href="search.jsp">Search</a></li>
@@ -164,12 +167,12 @@
             <div class="row oneMusic-albums">
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item s">
                     <div class="single-album">
                         <img src="img/bg-img/b2.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Son Tung M-TP</h5>
                             </a>
                             <p>Hay Trao Cho Anh</p>
@@ -178,12 +181,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item t">
                     <div class="single-album">
                         <img src="img/bg-img/b1.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Taylor Swift</h5>
                             </a>
                             <p>Look What You Made Me Do</p>
@@ -192,12 +195,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item j">
                     <div class="single-album">
                         <img src="img/bg-img/b3.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Justin Bieber</h5>
                             </a>
                             <p>Baby</p>
@@ -206,12 +209,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item e">
                     <div class="single-album">
                         <img src="img/bg-img/b4.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Ed Sheeran</h5>
                             </a>
                             <p>Shape of you</p>
@@ -220,12 +223,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item j">
                     <div class="single-album">
                         <img src="img/bg-img/b6.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Jay Chou</h5>
                             </a>
                             <p>Mojito</p>
@@ -234,12 +237,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item g">
                     <div class="single-album">
                         <img src="img/bg-img/b5.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>G - Dragon</h5>
                             </a>
                             <p>Haru Haru</p>
@@ -248,12 +251,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item r">
                     <div class="single-album">
                         <img src="img/bg-img/b7.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Rihanna</h5>
                             </a>
                             <p>Diamonds</p>
@@ -262,12 +265,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
                     <div class="single-album">
                         <img src="img/bg-img/b8.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Cardi B</h5>
                             </a>
                             <p>I Like It</p>
@@ -276,12 +279,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
                     <div class="single-album">
                         <img src="img/bg-img/b9.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Camila Cabello</h5>
                             </a>
                             <p>Señorita</p>
@@ -290,12 +293,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
                     <div class="single-album">
                         <img src="img/bg-img/b10.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Charlie Puth</h5>
                             </a>
                             <p>How long</p>
@@ -304,12 +307,12 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item a">
                     <div class="single-album">
                         <img src="img/bg-img/b11.jpg" alt="">
                         <div class="album-info">
-                            <a href="singer-detail.html">
+                            <a href="singer-detail.jsp">
                                 <h5>Alec Benjamin</h5>
                             </a>
                             <p>Let Me Down Slowly</p>
@@ -318,7 +321,7 @@
                 </div>
 
                 <!-- Single Album -->
-                <a href="singer-detail.html">
+                <a href="singer-detail.jsp">
                 <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item s">
                     <div class="single-album">
                         <img src="img/bg-img/b12.jpg" alt="">
