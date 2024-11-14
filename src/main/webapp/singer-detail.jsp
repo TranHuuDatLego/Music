@@ -1,3 +1,54 @@
+<%@ page import="java.sql.*, musicart.com.musicart.connectDB" %>
+<%
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    ResultSet rsSongs = null;
+
+    // Initialize variables for singer details
+    String name = "";
+    String image = "";
+    int age = 0;
+    String description = "";
+
+    // Retrieve the ID from the URL
+    String idParam = request.getParameter("id");
+    int id = 0;
+
+    try {
+        if (idParam != null) {
+            id = Integer.parseInt(idParam);
+        }
+
+        conn = connectDB.getConnection();
+
+        // Query to get singer details
+        String querySinger = "SELECT singer_id, name, image, age, description FROM singer WHERE singer_id = ?";
+        stmt = conn.prepareStatement(querySinger);
+        stmt.setInt(1, id);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            name = rs.getString("name");
+            image = rs.getString("image");
+            age = rs.getInt("age");
+            description = rs.getString("description");
+        } else {
+            out.println("<p>Singer not found.</p>");
+        }
+
+        // Query to get songs of the singer
+        String querySongs = "SELECT title, file_name, image FROM song WHERE singer = ?";
+        stmt = conn.prepareStatement(querySongs);
+        stmt.setString(1, name);
+        rsSongs = stmt.executeQuery();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        out.println("<p>Error: " + e.getMessage() + "</p>");
+    }
+%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -130,146 +181,57 @@
         <div style="padding-bottom: 20px;"></div>
     </section>
 
+    <!-- Display singer information -->
     <div class="add-area mb-100">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div style="display: flex; align-items: flex-start;">
-                        <img src="img/sontung.jpg" width="500" height="200" style="margin-right: 20px;">
-                        
+                        <img src="img/<%= image %>" width="500" height="200" style="margin-right: 20px;">
                         <div style="padding-top: 20px;">
-                            <h3 style="text-align: center;">Son Tung MTP</h3>
-                            <h6 style="text-align: center;">Age: 30</h6>
-                            <p>
-                                Nguyễn Thanh Tùng (born 5 July 1994), known as Sơn Tùng M-TP, is a Vietnamese singer-songwriter
-                                and actor. Born in Thái Bình, he showed musical talent from age two. His self-written singles
-                                "Cơn mưa ngang qua" (2012) and "Em của ngày hôm qua" (2013) launched his career, followed by
-                                hits like "Chắc ai đó sẽ về," "Lạc trôi," and "Nơi này có anh." In 2017, he released the
-                                compilation album *M-tp M-TP* and his autobiography, *Chạm tới giấc mơ*.
-                            </p>
+                            <h3 style="text-align: center;"><%= name %></h3>
+                            <h6 style="text-align: center;">Age: <%= age %></h6>
+                            <p><%= description %></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    
 
-    <!-- ##### Add Area Start ##### -->
-    <!-- <div class="add-area mb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="adds">
-                        <video width="640" height="360" controls>
-                            <source src="img/teaser.mp4">
-                        </video>
-                        <p class="addInfo">Alan Walker - Faded (teaser) </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- ##### Add Area End ##### -->
-
-    <!-- ##### Song Area Start ##### -->
+    <!-- Display singer's songs -->
     <div class="one-music-songs-area mb-70">
         <div class="container">
             <div class="row">
-
-                <!-- Single Song Area -->
+                <% while (rsSongs != null && rsSongs.next()) { 
+                    String songTitle = rsSongs.getString("title");
+                    String songImage = rsSongs.getString("image");
+                    String audioFile = rsSongs.getString("file_name");
+                %>
                 <div class="col-12">
                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
                         <div class="song-thumbnail">
-                            <img src="img/hay-trao-cho-anh.jpg" alt="">
+                            <img src="img/<%= songImage %>" alt="">
                         </div>
                         <div class="song-play-area">
                             <div class="song-name">
-                                <p>01. Hãy trao cho anh</p>
+                                <p><%= songTitle %></p>
                             </div>
                             <audio preload="auto" controls>
-                                <source src="audio/hay-trao-cho-anh.mp3">
+                                <source src="audio/<%= audioFile %>">
                             </audio>
                         </div>
                         <div class="download-button">
-                            <a href="audio/hay-trao-cho-anh.mp3" download>
+                            <a href="audio/<%= audioFile %>" download>
                                 <i class="fa fa-download"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/making-my-way.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>02. Making My Way</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/making-my-way.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/making-my-way.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/em-cua-ngay-hom-qua.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>03. Em của ngày hôm qua</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/em-cua-ngay-hom-qua.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/em-cua-ngay-hom-qua.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/dung-lam-trai-tim-anh-dau.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>04. Đừng làm trái tim anh đâu</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/dung-lam-trai-tim-anh-dau.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/dung-lam-trai-tim-anh-dau.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
+                <% } %>
             </div>
         </div>
     </div>
-    <!-- ##### Song Area End ##### -->
 
     <!-- ##### Contact Area Start ##### -->
     <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img"

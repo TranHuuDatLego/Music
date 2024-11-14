@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 12, 2024 lúc 11:27 AM
+-- Thời gian đã tạo: Th10 14, 2024 lúc 10:58 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -40,7 +40,9 @@ CREATE TABLE `singer` (
 --
 
 INSERT INTO `singer` (`singer_id`, `name`, `image`, `age`, `description`) VALUES
-(1, 'Sơn Tùng MTP', 'sontung.jpg', 30, 'Nguyễn Thanh Tùng (born 5 July 1994), known as Sơn Tùng M-TP, is a Vietnamese singer-songwriter\r\n                                and actor. Born in Thái Bình, he showed musical talent from age two. His self-written singles\r\n                                \"Cơn mưa ngang qua\" (2012) and \"Em của ngày hôm qua\" (2013) launched his career, followed by\r\n                                hits like \"Chắc ai đó sẽ về,\" \"Lạc trôi,\" and \"Nơi này có anh.\" In 2017, he released the\r\n                                compilation album *M-tp M-TP* and his autobiography, *Chạm tới giấc mơ*.');
+(1, 'Sơn Tùng MTP', 'sontung.jpg', 30, 'Nguyễn Thanh Tùng (born 5 July 1994), known as Sơn Tùng M-TP, is a Vietnamese singer-songwriter\\r\\n                                and actor. Born in Thái Bình, he showed musical talent from age two. His self-written singles\\r\\n                                \\\"Cơn mưa ngang qua\\\" (2012) and \\\"Em của ngày hôm qua\\\" (2013) launched his career, followed by\\r\\n                                hits like \\\"Chắc ai đó sẽ về,\\\" \\\"Lạc trôi,\\\" and \\\"Nơi này có anh.\\\" In 2017, he released the\\r\\n                                compilation album *M-tp M-TP* and his autobiography, *Chạm tới giấc mơ*.'),
+(2, 'Taylor Swift', 'talor.jpg', 25, 'Taylor Alison Swift là một nữ ca sĩ kiêm nhạc sĩ sáng tác bài hát người Mỹ. Cô nhận được nhiều sự quan tâm rộng rãi đến từ truyền thông và công chúng cũng như được nhiều ấn phẩm vinh danh là một trong những gương mặt tiêu biểu trong các danh sách hàng đầu. Bên cạnh phong cách nghệ thuật đa dạng, khả năng sáng tác nhạc và tư duy kinh doanh của cô có sức ảnh hưởng lớn đến ngành công nghiệp âm nhạc và văn hóa đại chúng, Swift còn là một người tích cực tham gia các hoạt động xã hội và chính trị nhằm trao từ thiện, ủng hộ quyền nghệ sĩ và nữ quyền.'),
+(3, 'Jack 97', 'jack.jpg', 25, 'Trịnh Trần Phương Tuấn, thường được biết đến với nghệ danh Jack – J97, là một nam ca sĩ kiêm sáng tác nhạc, rapper, diễn viên người Việt Nam');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,9 @@ INSERT INTO `song` (`song_id`, `title`, `image`, `singer`, `file_name`) VALUES
 (1, 'Hãy trao cho anh', 'hay-trao-cho-anh.jpg', 'Sơn Tùng MTP', 'hay-trao-cho-anh.mp3'),
 (2, 'Em của ngày hôm qua', 'em-cua-ngay-hom-qua.jpg', 'Sơn Tùng MTP', 'em-cua-ngay-hom-qua.mp3'),
 (3, 'Making my way', 'making-my-way.jpg', 'Sơn Tùng MTP', 'making-my-way.mp3'),
-(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3');
+(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3'),
+(5, 'Sóng gió', 'song-gio.png', 'Jack 97', 'song-gio.mp3'),
+(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3');
 
 -- --------------------------------------------------------
 
@@ -116,13 +120,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `singer`
 --
 ALTER TABLE `singer`
-  MODIFY `singer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `singer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `song`
 --
 ALTER TABLE `song`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
