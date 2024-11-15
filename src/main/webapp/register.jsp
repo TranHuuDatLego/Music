@@ -1,41 +1,5 @@
-<?jsp
 
-    include 'db.jsp';
 
-    $error = [];
-
-    if(isset($_POST['username'], $_POST['email'], $_POST['password'], $_POST['confirm_password'], $_POST['role'])) {
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $password = $_POST['password'];
-        $confirm_password = $_POST['confirm_password'];
-        $role = $_POST['role'];
-
-        // Check if email already exists
-        $select = "SELECT * FROM users WHERE email = '$email'";
-        $result = mysqli_query($conn, $select);
-
-        if(mysqli_num_rows($result) > 0) {
-            $error[] = 'User already exists!';
-        } else {
-            // Validate password
-            if($password !== $confirm_password) {
-                $error[] = 'Passwords do not match!';
-            } else {
-                // Insert new user into the database
-                $insert = "INSERT INTO users (username, email, password, user_type) VALUES ('$username', '$email', '$password', '$role')";
-                if(mysqli_query($conn, $insert)) {
-                    // Redirect to login page after successful registration
-                    header('location: index.jsp');
-                    exit();
-                } else {
-                    $error[] = 'Error: Unable to register user. Please try again later.';
-                }
-            }
-        }
-    }
-
-?>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -142,13 +106,13 @@
                         <h3>Create Account</h3>
                         <!-- Register Form -->
                         <div class="register-form">
-                            <form action="register.jsp" method="post">
+                            <form action="signup.jsp" method="post">
                                 <div class="form-group">
                                     <label for="username">Username</label>
                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email address</label>
+                                    <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter E-mail">
                                     <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
                                 </div>
@@ -168,15 +132,6 @@
                                     <label for="admin">Admin</label><br>
                                 </div>
                                 <button type="submit" class="btn oneMusic-btn mt-30">Register</button>
-                                <?jsp 
-                                    if(!empty($error)) { 
-                                        echo "<div class='mt-3'>";
-                                        foreach ($error as $err) {
-                                            echo "<p class='text-danger'>$err</p>";
-                                        }
-                                        echo "</div>";
-                                    } 
-                                ?>
                             </form>
                             <p class="mt-30">Already have an account? <a href="login.jsp">Login</a></p>
                         </div>

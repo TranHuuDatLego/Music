@@ -78,9 +78,19 @@
 
                                 <!-- Login/Register & Cart Button -->
                                 <div class="login-register-cart-button d-flex align-items-center">
-                                    <!-- Login/Register -->
                                     <div class="login-register-btn mr-50">
-                                        <a href="login.jsp" id="loginBtn">Login / Register</a>
+                                        <%
+                                            String username = (String) session.getAttribute("username");
+                                            if (username != null) {
+                                        %>
+                                            <a href=""> Wecome back, <%= username %>!</a>
+                                        <%
+                                            } else {
+                                        %>
+                                            <a href="login.jsp">Welcome, guest! Please login</a>.
+                                        <%
+                                            }
+                                        %>
                                     </div>
                                 </div>
                             </div>

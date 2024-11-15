@@ -1,24 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<?jsp
-   include 'db.jsp';
-   session_start();
+<%
+    String role = (String) session.getAttribute("role");
+    if (role == null || !"admin".equals(role)) {
+        response.sendRedirect("login.jsp"); // Chuyển hướng nếu không có quyền
+    }
+%>
 
-   if ($_SESSION['user_type'] != 'admin') {
-      header("Location: user.jsp"); // Redirect non-admins to login page
-      exit();
-   }
-
-   // Check if the user is not an admin
-   if ($_SESSION['user_type'] !== 'admin') {
-      // Set an error message
-      $_SESSION['error_message'] = 'You are not authorized to access the admin page.';
-      
-      // Redirect them to the user page
-      // header("Location: user.jsp");
-      exit();
-   }
-?>
 
 <!DOCTYPE html>
 <html lang="en">
