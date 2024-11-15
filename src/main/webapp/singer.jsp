@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="musicart.com.musicart.connectDB" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,59 +64,7 @@
     </div>
 
     <!-- ##### Header Area Start ##### -->
-    <header class="header-area">
-        <!-- Navbar Area -->
-        <div class="oneMusic-main-menu">
-            <div class="classy-nav-container breakpoint-off">
-                <div class="container">
-                    <!-- Menu -->
-                    <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
-                        <!-- Nav brand -->
-                        <a href="index.jsp" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
-
-                        <!-- Navbar Toggler -->
-                        <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
-
-                        <!-- Menu -->
-                        <div class="classy-menu">
-
-                            <!-- Close Button -->
-                            <div class="classycloseIcon">
-                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                            </div>
-
-                            <!-- Nav Start -->
-                            <div class="classynav">
-                                <ul>
-                                    <li><a href="index.jsp">Home</a></li>
-                                    <li><a href="singer.jsp">Singer</a></li>
-                                    <li><a href="song.jsp">Song</a></li>
-                                    <li><a href="event.jsp">Events</a></li>
-                                    <li><a href="blog.jsp">News</a></li>
-                                    <li><a href="search.jsp">Search</a></li>
-                                    <li><a href="contact.jsp">Contact</a></li>
-                                </ul>
-
-                                <!-- Login/Register & Cart Button -->
-                                <div class="login-register-cart-button d-flex align-items-center">
-                                    <!-- Login/Register -->
-                                    <div class="login-register-btn mr-50">
-                                        <a href="login.jsp" id="loginBtn">Login / Register</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Nav End -->
-
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
+    <%@ include file="header.jsp" %>
 
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
@@ -125,335 +75,98 @@
     </section>
     <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Album Catagory Area Start ##### -->
-    <section class="album-catagory section-padding-100-0">
-        <h2 style="text-align: center;">Filter by First Letter</h2>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
-                        <a href="#" data-filter="*" class="active">Browse All</a>
-                        <a href="#" data-filter=".a">A</a>
-                        <a href="#" data-filter=".b">B</a>
-                        <a href="#" data-filter=".c">C</a>
-                        <a href="#" data-filter=".d">D</a>
-                        <a href="#" data-filter=".e">E</a>
-                        <a href="#" data-filter=".f">F</a>
-                        <a href="#" data-filter=".g">G</a>
-                        <a href="#" data-filter=".h">H</a>
-                        <a href="#" data-filter=".i">I</a>
-                        <a href="#" data-filter=".j">J</a>
-                        <a href="#" data-filter=".k">K</a>
-                        <a href="#" data-filter=".l" >L</a>
-                        <a href="#" data-filter=".m" >M</a>
-                        <a href="#" data-filter=".n" >N</a>
-                        <a href="#" data-filter=".o" >O</a>
-                        <a href="#" data-filter=".p" >P</a>
-                        <a href="#" data-filter=".q" >Q</a>
-                        <a href="#" data-filter=".r" >R</a>
-                        <a href="#" data-filter=".s" >S</a>
-                        <a href="#" data-filter=".t" >T</a>
-                        <a href="#" data-filter=".u" >U</a>
-                        <a href="#" data-filter=".v" >V</a>
-                        <a href="#" data-filter=".w" >W</a>
-                        <a href="#" data-filter=".x" >X</a>
-                        <a href="#" data-filter=".y" >Y</a>
-                        <a href="#" data-filter=".z" >Z</a>
-                        <a href="#" data-filter=".number" class="active">0-9</a>
+        <!-- ##### Album Category Area Start ##### -->
+        <section class="album-catagory section-padding-100-0">
+            <h2 style="text-align: center;">Filter by First Letter</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
+                            <a href="#" data-filter="*" class="active">Browse All</a>
+                            <a href="#" data-filter=".a">A</a>
+                            <a href="#" data-filter=".b">B</a>
+                            <a href="#" data-filter=".c">C</a>
+                            <a href="#" data-filter=".d">D</a>
+                            <a href="#" data-filter=".e">E</a>
+                            <a href="#" data-filter=".f">F</a>
+                            <a href="#" data-filter=".g">G</a>
+                            <a href="#" data-filter=".h">H</a>
+                            <a href="#" data-filter=".i">I</a>
+                            <a href="#" data-filter=".j">J</a>
+                            <a href="#" data-filter=".k">K</a>
+                            <a href="#" data-filter=".l" >L</a>
+                            <a href="#" data-filter=".m" >M</a>
+                            <a href="#" data-filter=".n" >N</a>
+                            <a href="#" data-filter=".o" >O</a>
+                            <a href="#" data-filter=".p" >P</a>
+                            <a href="#" data-filter=".q" >Q</a>
+                            <a href="#" data-filter=".r" >R</a>
+                            <a href="#" data-filter=".s" >S</a>
+                            <a href="#" data-filter=".t" >T</a>
+                            <a href="#" data-filter=".u" >U</a>
+                            <a href="#" data-filter=".v" >V</a>
+                            <a href="#" data-filter=".w" >W</a>
+                            <a href="#" data-filter=".x" >X</a>
+                            <a href="#" data-filter=".y" >Y</a>
+                            <a href="#" data-filter=".z" >Z</a>
+                            <a href="#" data-filter=".number" class="active">0-9</a>
+                        </div>
                     </div>
+                </div>
+    
+
+                <!-- Singer Albums -->
+                <div class="row oneMusic-albums">
+                    <%
+                        Connection conn = null;
+                        PreparedStatement stmt = null;
+                        ResultSet rs = null;
+
+                        try {
+                            // Kết nối đến cơ sở dữ liệu
+                            conn = connectDB.getConnection();
+
+                            // Query để lấy danh sách ca sĩ
+                            String query = "SELECT singer_id, name, image, age, description FROM singer ORDER BY name";
+                            stmt = conn.prepareStatement(query);
+                            rs = stmt.executeQuery();
+
+                            // Hiển thị từng ca sĩ
+                            while (rs.next()) {
+                                int id = rs.getInt("singer_id");
+                                String name = rs.getString("name");
+                                String image = rs.getString("image");
+                                int age = rs.getInt("age");
+                                String description = rs.getString("description");
+                                String firstLetter = name.substring(0, 1).toLowerCase(); // Lấy chữ cái đầu
+                    %>
+                    <!-- Single Album -->
+                    <a href="singer-detail.jsp?id=<%= id %>">
+                        <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item <%= firstLetter %>">
+                            <div class="single-album">
+                                <img src="img/<%= image %>" alt="<%= name %>">
+                                <div class="album-info">
+                                    <h5><%= name %></h5>
+                                    <!-- <p>Click để xem chi tiết</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <%
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            out.println("<p>Error: " + e.getMessage() + "</p>");
+                        } finally {
+                            if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                            if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        }
+                    %>
                 </div>
             </div>
-
-            <div class="row oneMusic-albums">
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item s">
-                    <div class="single-album">
-                        <img src="img/bg-img/b2.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Son Tung M-TP</h5>
-                            </a>
-                            <p>Hay Trao Cho Anh</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item t">
-                    <div class="single-album">
-                        <img src="img/bg-img/b1.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Taylor Swift</h5>
-                            </a>
-                            <p>Look What You Made Me Do</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item j">
-                    <div class="single-album">
-                        <img src="img/bg-img/b3.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Justin Bieber</h5>
-                            </a>
-                            <p>Baby</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item e">
-                    <div class="single-album">
-                        <img src="img/bg-img/b4.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Ed Sheeran</h5>
-                            </a>
-                            <p>Shape of you</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item j">
-                    <div class="single-album">
-                        <img src="img/bg-img/b6.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Jay Chou</h5>
-                            </a>
-                            <p>Mojito</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item g">
-                    <div class="single-album">
-                        <img src="img/bg-img/b5.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>G - Dragon</h5>
-                            </a>
-                            <p>Haru Haru</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item r">
-                    <div class="single-album">
-                        <img src="img/bg-img/b7.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Rihanna</h5>
-                            </a>
-                            <p>Diamonds</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
-                    <div class="single-album">
-                        <img src="img/bg-img/b8.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Cardi B</h5>
-                            </a>
-                            <p>I Like It</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
-                    <div class="single-album">
-                        <img src="img/bg-img/b9.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Camila Cabello</h5>
-                            </a>
-                            <p>Señorita</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item c">
-                    <div class="single-album">
-                        <img src="img/bg-img/b10.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Charlie Puth</h5>
-                            </a>
-                            <p>How long</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item a">
-                    <div class="single-album">
-                        <img src="img/bg-img/b11.jpg" alt="">
-                        <div class="album-info">
-                            <a href="singer-detail.jsp">
-                                <h5>Alec Benjamin</h5>
-                            </a>
-                            <p>Let Me Down Slowly</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Album -->
-                <a href="singer-detail.jsp">
-                <div class="col-12 col-sm-4 col-md-3 col-lg-2 single-album-item s">
-                    <div class="single-album">
-                        <img src="img/bg-img/b12.jpg" alt="">
-                        <div class="album-info">
-                            
-                                <h5>Shakira</h5>
-                            </a>
-                            <p>La la la</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- ##### Album Catagory Area End ##### -->
-
-
-    <!-- ##### Add Area Start ##### -->
-    <div class="add-area mb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="adds"> 
-                        <video width="640" height="360" controls>
-                            <source src="img/teaser.mp4" >
-                        </video>
-                        <p class="addInfo">Alan Walker - Faded (teaser) </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Add Area End ##### -->
-
-    <!-- ##### Song Area Start ##### -->
-    <div class="one-music-songs-area mb-70">
-        <div class="container">
-            <div class="row">
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/bg-img/l1.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>01. Shape of You</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/soy.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/soy.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/bg-img/l2.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>02. We don't talk anymore</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/wdtam.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/wdtam.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/bg-img/l3.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>03. Senõrita</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/senorita.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/senorita.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Song Area -->
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
-                        <div class="song-thumbnail">
-                            <img src="img/bg-img/l4.jpg" alt="">
-                        </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p>04. Despacito</p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/despacito.mp3">
-                            </audio>
-                        </div>
-                        <div class="download-button">
-                            <a href="audio/despacito.mp3" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- ##### Song Area End ##### -->
+        </section>
+        <!-- ##### Album Category Area End ##### -->
 
     <!-- ##### Contact Area Start ##### -->
     <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img" style="background-image: url(img/bg-img/bg-2.jpg);">

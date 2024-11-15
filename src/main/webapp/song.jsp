@@ -1,4 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="musicart.com.musicart.connectDB" %>
+
 
     <!DOCTYPE html>
     <html lang="en">
@@ -60,60 +63,8 @@
             </div>
         </div>
 
-        <!-- ##### Header Area Start ##### -->
-        <header class="header-area">
-            <!-- Navbar Area -->
-            <div class="oneMusic-main-menu">
-                <div class="classy-nav-container breakpoint-off">
-                    <div class="container">
-                        <!-- Menu -->
-                        <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
-                            <!-- Nav brand -->
-                            <a href="index.jsp" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
-
-                            <!-- Navbar Toggler -->
-                            <div class="classy-navbar-toggler">
-                                <span class="navbarToggler"><span></span><span></span><span></span></span>
-                            </div>
-
-                            <!-- Menu -->
-                            <div class="classy-menu">
-
-                                <!-- Close Button -->
-                                <div class="classycloseIcon">
-                                    <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                                </div>
-
-                                <!-- Nav Start -->
-                                <div class="classynav">
-                                    <ul>
-                                        <li><a href="index.jsp">Home</a></li>
-                                        <li><a href="singer.jsp">Singer</a></li>
-                                        <li><a href="song.jsp">Song</a></li>
-                                        <li><a href="event.jsp">Events</a></li>
-                                        <li><a href="blog.jsp">News</a></li>
-                                        <li><a href="search.jsp">Search</a></li>
-                                        <li><a href="contact.jsp">Contact</a></li>
-                                    </ul>
-
-                                    <!-- Login/Register & Cart Button -->
-                                    <div class="login-register-cart-button d-flex align-items-center">
-                                        <!-- Login/Register -->
-                                        <div class="login-register-btn mr-50">
-                                            <a href="login.jsp" id="loginBtn">Login / Register</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Nav End -->
-
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- ##### Header Area End ##### -->
+            <!-- ##### Header Area Start ##### -->
+    <%@ include file="header.jsp" %>
 
         <!-- ##### Breadcumb Area Start ##### -->
         <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
@@ -129,17 +80,11 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-9">
-                        <div class="ablums-text text-center mb-70">
-                            <p style="font-size: 18px;"> Welcome to the Music by Night &mdash; the gateway to a world of
-                                rich and diverse music! When you click on the Discovery button, an adventure full of
-                                surprises and excitement begins.
-                                This feature will take you on a musical journey, exploring new tracks, intriguing
-                                artists, and unique playlists every time you access it. Whether you're a fan of the
-                                latest hits or looking to discover unique tracks from past generations, Discovery will
-                                be your ideal companion.
-                                By combining advanced technology with the creativity of music experts, we are committed
-                                to providing you with the most unique and exciting listening experience.
-                            </p>
+                        <div class="albums-text text-center mb-70">
+                            <p style="font-size: 18px;">Welcome to the Music by Night &mdash; the gateway to a world of
+                                rich and diverse music! Discover new tracks, intriguing artists, and unique playlists
+                                every time you access it. Whether you're a fan of the latest hits or looking to discover
+                                unique tracks from past generations, Discovery will be your ideal companion.</p>
                         </div>
                     </div>
                 </div>
@@ -150,76 +95,56 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-12">
-                        <div class="albums-slideshow owl-carousel">
-                            <!-- Single Album 1-->
-                            <div class="single-album">
-                                <a href="song-detail.jsp">
-                                    <img src="img/bg-img/a1.jpg" alt="">
-                                    <div class="album-info">
-                                        <a href="song-detail.jsp">
-                                            <h5>Alan Walker</h5>
-                                        </a>
-                                        <p>Lost Control</p>
-                                    </div>
-                                </a>
-                            </div>
+                    <%
+                        Connection conn = null;
+                        PreparedStatement stmt = null;
+                        ResultSet rs = null;
 
-                            <!-- Single Album 2-->
-                            <div class="single-album">
-                                <a href="song-detail.jsp">
-                                    <img src="img/bg-img/a2.jpg" alt="">
-                                    <div class="album-info">
-                                        <a href="song-detail.jsp">
-                                            <h5>Alan Walker</h5>
-                                        </a>
-                                        <p>Faded</p>
-                                    </div>
-                                </a>
-                            </div>
+                        try {
+                            // Kết nối tới cơ sở dữ liệu
+                            conn = connectDB.getConnection();
 
-                            <!-- Single Album 3-->
-                            <div class="single-album">
-                                <a href="song-detail.jsp">
-                                    <img src="img/bg-img/a3.jpg" alt="">
-                                    <div class="album-info">
-                                        <a href="song-detail.jsp">
-                                            <h5>Alan Walker</h5>
-                                        </a>
-                                        <p>On My Way</p>
-                                    </div>
-                                </a>
-                            </div>
+                            // Query để lấy danh sách bài hát
+                            String query = "SELECT song_id, title, image, singer, description FROM song ORDER BY song_id DESC";
+                            stmt = conn.prepareStatement(query);
+                            rs = stmt.executeQuery();
 
-                            <!-- Single Album 4-->
-                            <div class="single-album">
-                                <a href="song-detail.jsp">
-                                    <img src="img/bg-img/a4.jpg" alt="">
-                                    <div class="album-info">
-                                        <a href="song-detail.jsp">
-                                            <h5>Alan Walker</h5>
-                                        </a>
-                                        <p>Alone</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Single Album 5-->
-                            <div class="single-album">
-                                <a href="song-detail.jsp">
-                                    <img src="img/bg-img/a5.jpg" alt="">
-                                    <div class="album-info">
-                                        <a href="song-detail.jsp">
-                                            <h5>Alan Walker</h5>
-                                        </a>
-                                        <p>Legend Never Die</p>
-                                    </div>
-                                </a>
-                            </div>
-
+                            // Hiển thị từng bài hát
+                            while (rs.next()) {
+                                int id = rs.getInt("song_id");
+                                String title = rs.getString("title");
+                                String image = rs.getString("image");
+                                String singer = rs.getString("singer");
+                                String description = rs.getString("description");
+                    %>
+                    <!-- Single Album -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="single-album">
+                            <a href="song-detail.jsp?id=<%= id %>">
+                                <img src="img/<%= image %>" alt="<%= title %>">
+                                <div class="album-info">
+                                    <a href="song-detail.jsp?id=<%= id %>">
+                                        <h5><%= title %></h5>
+                                    </a>
+                                    <p><%= singer %></p>
+                                    <!-- <small><%= singer %></small> -->
+                                </div>
+                            </a>
                         </div>
                     </div>
+                    <%
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            out.println("<p>Error: " + e.getMessage() + "</p>");
+                        } finally {
+                            if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                            if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        }
+                    %>
                 </div>
             </div>
         </section>
