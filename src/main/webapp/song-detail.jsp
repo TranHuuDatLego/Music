@@ -40,171 +40,208 @@
         object-fit: cover;
         /* Cắt ảnh nếu cần */
     }
+
+    .footer-area {
+        width: 100%;
+        background-color: #000;
+        text-align: center;
+        padding: 20px 0;
+    }
+
 </style>
 <body>
-    <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
-    <!-- Header -->
-    <%@ include file="header.jsp" %>
+</div>
+<!-- Header -->
+<%@ include file="header.jsp" %>
 
-    <!-- ##### Breadcumb Area Start ##### -->
-    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
-        <div class="bradcumbContent">
-            <p>See what's new</p>
-            <h2>Latest Albums</h2>
-        </div>
-    </section>
-    <!-- ##### Breadcumb Area End ##### -->
-
-    <!-- ##### Album Category Area Start ##### -->
-    <section class="album-catagory section-padding-100-0">
-        <div style="padding-bottom: 20px;"></div>
-    </section>
-
-    <!-- ##### Featured Artist Area Start ##### -->
-    <div class="container section-padding-100">
-        <div class="row align-items-end">
-            <% 
-            Connection conn = null;
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-            String id = request.getParameter("id"); // Lấy ID từ URL
-            if (id != null) {
-                try {
-                    conn = connectDB.getConnection();
-                    String query = "SELECT * FROM song WHERE song_id = ?";
-                    stmt = conn.prepareStatement(query);
-                    stmt.setInt(1, Integer.parseInt(id)); // Gán ID vào truy vấn
-                    rs = stmt.executeQuery();
-                    if (rs.next()) { 
-                        String title = rs.getString("title");
-                        String image = rs.getString("image");
-                        String singer = rs.getString("singer");
-                        String description = rs.getString("description");
-                        String file_name = rs.getString("file_name"); // File âm thanh
-            %>
-            <!-- Song Detail -->
-            <div class="col-12 col-md-5 col-lg-4">
-                <div class="featured-artist-thumb">
-                    <img src="img/<%= image %>" alt="<%= title %>" class="img-fluid">
-                </div>
-            </div>
-            <div class="col-12 col-md-7 col-lg-8">
-                <div class="featured-artist-content">
-                    <div class="section-heading white text-left mb-30">
-                        <p style="color: #000; text-align: center;">Hit Song</p>
-                        <h2 style="color: #000; text-align: center;"><%= title %> - <%= singer %></h2>
-                    </div>
-                    <p style="color: #000;"><%= description %></p>
-                    <div class="song-play-area">
-                        <div class="song-name">
-                            <p><%= title %></p>
-                        </div>
-                        <audio preload="auto" controls>
-                            <source src="audio/<%= file_name %>" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio> 
-                    </div>
-                </div>
-            </div>
-            <% 
-                    } else { 
-            %>
-            <p>Song not found!</p>
-            <% 
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    out.println("<p>Error: " + e.getMessage() + "</p>");
-                } finally {
-                    if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                    if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                    if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-                }
-            } else { 
-            %>
-            <p>Invalid song ID!</p>
-            <% } %>
-        </div>
+<!-- ##### Breadcumb Area Start ##### -->
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
+    <div class="bradcumbContent">
+        <p>See what's new</p>
+        <h2>Song</h2>
     </div>
-    <!-- ##### Featured Artist Area End ##### -->
+</section>
+<!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Latest Albums Area Start ##### -->
-    <section class="latest-albums-area section-padding-100">
-        <div class="container">
-            <div class="section-heading style-2">
-                <p><strong>See some newly released albums</strong></p>
+<!-- ##### Featured Artist Area Start ##### -->
+<div class="container section-padding-100">
+    <div class="row align-items-end">
+            <%
+Connection conn = null;
+PreparedStatement stmt = null;
+ResultSet rs = null;
+String id = request.getParameter("id"); // Lấy ID từ URL
+if (id != null) {
+    try {
+        conn = connectDB.getConnection();
+
+        // Tăng views trước khi lấy thông tin bài hát
+        String updateQuery = "UPDATE song SET views = views + 1 WHERE song_id = ?";
+        stmt = conn.prepareStatement(updateQuery);
+        stmt.setInt(1, Integer.parseInt(id)); // Gán ID vào truy vấn
+        stmt.executeUpdate();
+        stmt.close();
+
+        // Truy vấn thông tin bài hát
+        String selectQuery = "SELECT * FROM song WHERE song_id = ?";
+        stmt = conn.prepareStatement(selectQuery);
+        stmt.setInt(1, Integer.parseInt(id)); // Gán ID vào truy vấn
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            int views = rs.getInt("views");
+            String title = rs.getString("title");
+            String image = rs.getString("image");
+            String singer = rs.getString("singer");
+            String description = rs.getString("description");
+            String file_name = rs.getString("file_name"); // File âm thanh
+%>
+        <!-- Song Detail -->
+        <div class="col-12 col-md-5 col-lg-4">
+            <div class="featured-artist-thumb">
+                <img src="img/<%= image %>" alt="<%= title %>" class="img-fluid">
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="albums-slideshow owl-carousel">
-                        <% 
-                        try {
-                            conn = connectDB.getConnection();
-                            String query = "SELECT song_id, title, image, singer, description FROM song ORDER BY song_id DESC";
-                            stmt = conn.prepareStatement(query);
-                            rs = stmt.executeQuery();
-                            while (rs.next()) {
-                                int songId = rs.getInt("song_id");
-                                String title = rs.getString("title");
-                                String image = rs.getString("image");
-                                String singer = rs.getString("singer");
-                                String description = rs.getString("description");
-                        %>
-                        <!-- Single Album -->
-                        <div class="single-album">
-                            <a href="song-detail.jsp?id=<%= songId %>">
-                                <img src="img/<%= image %>" alt="<%= title %>">
-                                <div class="album-info">
-                                    <h5><%= title %></h5>
-                                    <p><%= singer %></p>
-                                </div>
-                            </a>
-                        </div>
-                        <% 
-                            } 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            out.println("<p>Error: " + e.getMessage() + "</p>");
-                        } finally {
-                            if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                            if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-                        }
-                        %>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8">
+            <div class="featured-artist-content">
+                <div class="section-heading white text-left mb-30">
+                    <h1 style="color: #000; text-align: center;"><%= title %>
+                    </h1>
+                    <h2 style="color: #000; text-align: center;"><%= singer %>
+                    </h2>
+                </div>
+                <p style="color: #000;"><%= description %>
+                </p>
+                <p style="color: #000;">Listening: <b><%= views %>
+                </b>
+                </p>
+                <div class="song-play-area">
+                    <div class="song-name">
+                        <p><%= title %>
+                        </p>
                     </div>
+                    <audio preload="auto" controls>
+                        <source src="audio/<%= file_name %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- ##### Latest Albums Area End ##### -->
+            <%
+        } else {
+%>
+        <p>Song not found!</p>
+            <%
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        out.println("<p>Error: " + e.getMessage() + "</p>");
+    } finally {
+        if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        if (stmt != null) try { stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+        if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+    }
+} else {
+%>
+        <p>Invalid song ID!</p>
+            <%
+}
+%>
+        <!-- ##### Featured Artist Area End ##### -->
 
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
-        <div style="text-align: center; background-color: #000;">
-            <img src="icons/icon-pay-01.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-02.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-03.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-04.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-05.png" alt="Payment Methods" style="margin-top: 10px;">
-            <p>&copy; 2024 All rights reserved by Phong - Dat - Nam</p>
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
+        <!-- ##### Latest Albums Area Start ##### -->
+        <section class="latest-albums-area section-padding-100">
+            <div class="container">
+                <div class="section-heading style-2">
+                    <p><strong>See some newly released albums</strong></p>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="albums-slideshow owl-carousel">
+                            <%
+                                try {
+                                    conn = connectDB.getConnection();
+                                    String query = "SELECT song_id, title, image, singer, description FROM song ORDER BY song_id DESC";
+                                    stmt = conn.prepareStatement(query);
+                                    rs = stmt.executeQuery();
+                                    while (rs.next()) {
+                                        int songId = rs.getInt("song_id");
+                                        String title = rs.getString("title");
+                                        String image = rs.getString("image");
+                                        String singer = rs.getString("singer");
+                                        String description = rs.getString("description");
+                            %>
+                            <!-- Single Album -->
+                            <div class="single-album">
+                                <a href="song-detail.jsp?id=<%= songId %>">
+                                    <img src="img/<%= image %>" alt="<%= title %>">
+                                    <div class="album-info">
+                                        <h5><%= title %>
+                                        </h5>
+                                        <p><%= singer %>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                            <%
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    out.println("<p>Error: " + e.getMessage() + "</p>");
+                                } finally {
+                                    if (rs != null) try {
+                                        rs.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (stmt != null) try {
+                                        stmt.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (conn != null) try {
+                                        conn.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
-    <!-- ##### All Javascript Script ##### -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <script src="js/bootstrap/popper.min.js"></script>
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <script src="js/plugins/plugins.js"></script>
-    <script src="js/active.js"></script>
+        <!-- ##### Latest Albums Area End ##### -->
+
+        <!-- ##### Footer Area Start ##### -->
+        <footer class="footer-area">
+            <div style="text-align: center; background-color: #000;">
+                <img src="icons/icon-pay-01.png" alt="Payment Methods" style="margin-top: 10px;">
+                <img src="icons/icon-pay-02.png" alt="Payment Methods" style="margin-top: 10px;">
+                <img src="icons/icon-pay-03.png" alt="Payment Methods" style="margin-top: 10px;">
+                <img src="icons/icon-pay-04.png" alt="Payment Methods" style="margin-top: 10px;">
+                <img src="icons/icon-pay-05.png" alt="Payment Methods" style="margin-top: 10px;">
+                <p>&copy; 2024 All rights reserved by Phong - Dat - Nam</p>
+            </div>
+        </footer>
+        <!-- ##### Footer Area End ##### -->
+
+        <!-- ##### All Javascript Script ##### -->
+        <script src="js/jquery/jquery-2.2.4.min.js"></script>
+        <script src="js/bootstrap/popper.min.js"></script>
+        <script src="js/bootstrap/bootstrap.min.js"></script>
+        <script src="js/plugins/plugins.js"></script>
+        <script src="js/active.js"></script>
 </body>
 
 </html>

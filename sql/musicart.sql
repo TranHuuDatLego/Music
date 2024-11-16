@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 14, 2024 lúc 10:58 AM
+-- Thời gian đã tạo: Th10 16, 2024 lúc 08:44 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -20,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `musicart`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `favorite`
+--
+
+CREATE TABLE `favorite` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -55,20 +80,22 @@ CREATE TABLE `song` (
   `title` varchar(100) NOT NULL,
   `image` varchar(255) NOT NULL,
   `singer` varchar(255) NOT NULL,
-  `file_name` varchar(100) NOT NULL
+  `file_name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `views` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `song`
 --
 
-INSERT INTO `song` (`song_id`, `title`, `image`, `singer`, `file_name`) VALUES
-(1, 'Hãy trao cho anh', 'hay-trao-cho-anh.jpg', 'Sơn Tùng MTP', 'hay-trao-cho-anh.mp3'),
-(2, 'Em của ngày hôm qua', 'em-cua-ngay-hom-qua.jpg', 'Sơn Tùng MTP', 'em-cua-ngay-hom-qua.mp3'),
-(3, 'Making my way', 'making-my-way.jpg', 'Sơn Tùng MTP', 'making-my-way.mp3'),
-(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3'),
-(5, 'Sóng gió', 'song-gio.png', 'Jack 97', 'song-gio.mp3'),
-(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3');
+INSERT INTO `song` (`song_id`, `title`, `image`, `singer`, `file_name`, `description`, `views`) VALUES
+(1, 'Hãy trao cho anh', 'hay-trao-cho-anh.jpg', 'Sơn Tùng MTP', 'hay-trao-cho-anh.mp3', '', 21),
+(2, 'Em của ngày hôm qua', 'em-cua-ngay-hom-qua.jpg', 'Sơn Tùng MTP', 'em-cua-ngay-hom-qua.mp3', '', 44),
+(3, 'Making my way', 'making-my-way.jpg', 'Sơn Tùng MTP', 'making-my-way.mp3', '', 60),
+(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3', '', 101),
+(5, 'Sóng gió', 'song-gio.png', 'Jack 97', 'song-gio.mp3', '\"Sóng gió\" là một đĩa đơn của nhà sản xuất âm nhạc người Việt Nam KHÁNH và ca sĩ kiêm sáng tác nhạc, rapper người Việt Nam – Jack – J97 sáng tác và trình bày, được ra mắt vào lúc 20h ngày 12 tháng 7 năm 2019 trên Zing MP3 cùng với một video âm nhạc (MV) trên kênh YouTube của KHÁNH. Sóng gió trở thành một trong những ca khúc thành công nhất trong sự nghiệp của Jack, và là một trong những ca khúc nổi bật nhất năm 2019. Trước đó, teaser của MV này cũng từng lọt top 2 trending YouTube cùng hơn 3 triệu lượt xem. Các từ khóa \"J97\", \"Sóng gió\"... cũng lọt top tìm kiếm trên Google.', 110),
+(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3', '', 36);
 
 -- --------------------------------------------------------
 
@@ -80,19 +107,35 @@ CREATE TABLE `user` (
   `id` int(10) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`) VALUES
-(1, 'admin', 'admin@gmail.com', '123456');
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
+(1, 'admin', 'admin@gmail.com', '123456', 'admin'),
+(3, '522h00812', 'huudat.peashooer@gmail.com', 'huudat', 'user'),
+(4, 'admin', 'admin@gmail.com', '1234', 'admin'),
+(5, 'nam', 'nam@gmail.com', 'huudat', 'user');
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `favorite`
+--
+ALTER TABLE `favorite`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `singer`
@@ -117,6 +160,18 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT cho bảng `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `favorite`
+--
+ALTER TABLE `favorite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT cho bảng `singer`
 --
 ALTER TABLE `singer`
@@ -132,7 +187,7 @@ ALTER TABLE `song`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -34,11 +34,11 @@
                     session.setAttribute("role", role);
 
                     // Chuyển hướng theo vai trò
-                    if ("admin".equals(role)) {
+                    if ("admin".equalsIgnoreCase(role.trim())) {
                         response.sendRedirect("admin.jsp");
                     } else {
                         response.sendRedirect("index.jsp");
-                    }
+                    }                    
                 } else {
                     out.println("<p class='text-danger'>Sai tên đăng nhập hoặc mật khẩu!</p>");
                 }

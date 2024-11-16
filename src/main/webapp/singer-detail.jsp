@@ -38,7 +38,7 @@
         }
 
         // Query to get songs of the singer
-        String querySongs = "SELECT title, file_name, image FROM song WHERE singer = ?";
+        String querySongs = "SELECT song_id, title, file_name, image FROM song WHERE singer = ?";
         stmt = conn.prepareStatement(querySongs);
         stmt.setString(1, name);
         rsSongs = stmt.executeQuery();
@@ -49,7 +49,7 @@
     }
 %>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -101,172 +101,181 @@
 </head>
 
 <body>
-    <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
+<!-- Preloader -->
+<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
+</div>
 
-        <!-- ##### Header Area Start ##### -->
-        <%@ include file="header.jsp" %>
+<!-- ##### Header Area Start ##### -->
+<%@ include file="header.jsp" %>
 
-    <!-- ##### Breadcumb Area Start ##### -->
-    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
-        <div class="bradcumbContent">
-            <p>See what's new</p>
-            <h2>Singer</h2>
-        </div>
-    </section>
-    <!-- ##### Breadcumb Area End ##### -->
+<!-- ##### Breadcumb Area Start ##### -->
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/a9.jpg);">
+    <div class="bradcumbContent">
+        <p>See what's new</p>
+        <h2>Singer</h2>
+    </div>
+</section>
+<!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Album Catagory Area Start ##### -->
-    <section class="album-catagory section-padding-100-0">
-        
-        <div style="padding-bottom: 20px;"></div>
-    </section>
+<!-- ##### Album Catagory Area Start ##### -->
+<section class="album-catagory section-padding-100-0">
 
-    <!-- Display singer information -->
-    <div class="add-area mb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div style="display: flex; align-items: flex-start;">
-                        <img src="img/<%= image %>" width="500" height="200" style="margin-right: 20px;">
-                        <div style="padding-top: 20px;">
-                            <h3 style="text-align: center;"><%= name %></h3>
-                            <h6 style="text-align: center;">Age: <%= age %></h6>
-                            <p><%= description %></p>
-                        </div>
+    <div style="padding-bottom: 20px;"></div>
+</section>
+
+<!-- Display singer information -->
+<div class="add-area mb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div style="display: flex; align-items: flex-start;">
+                    <img src="img/<%= image %>" width="400" height="150" style="margin-right: 20px;">
+                    <div style="padding-top: 20px;">
+                        <h3 style="text-align: center;"><%= name %>
+                        </h3>
+                        <h6 style="text-align: center;">Age: <%= age %>
+                        </h6>
+                        <p><%= description %>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Display singer's songs -->
-    <div class="one-music-songs-area mb-70">
-        <div class="container">
-            <div class="row">
-                <% while (rsSongs != null && rsSongs.next()) { 
-                    String songTitle = rsSongs.getString("title");
-                    String songImage = rsSongs.getString("image");
-                    String audioFile = rsSongs.getString("file_name");
-                %>
-                <div class="col-12">
-                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+<!-- Display singer's songs -->
+<div class="one-music-songs-area mb-70">
+    <div class="container">
+        <div class="row">
+            <% while (rsSongs != null && rsSongs.next()) {
+                int songId = rsSongs.getInt("song_id");
+                String songTitle = rsSongs.getString("title");
+                String songImage = rsSongs.getString("image");
+                String audioFile = rsSongs.getString("file_name");
+            %>
+            <div class="col-12">
+
+                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                    <a href="song-detail.jsp?id=<%= songId %>">
                         <div class="song-thumbnail">
                             <img src="img/<%= songImage %>" alt="">
                         </div>
-                        <div class="song-play-area">
-                            <div class="song-name">
-                                <p><%= songTitle %></p>
-                            </div>
-                            <audio preload="auto" controls>
-                                <source src="audio/<%= audioFile %>">
-                            </audio>
+                    </a>
+                    <div class="song-play-area">
+                        <div class="song-name">
+                            <p><%= songTitle %>
+                            </p>
                         </div>
-                        <div class="download-button">
-                            <a href="audio/<%= audioFile %>" download>
-                                <i class="fa fa-download"></i>
-                            </a>
-                        </div>
+                        <audio preload="auto" controls>
+                            <source src="audio/<%= audioFile %>">
+                        </audio>
+                    </div>
+                    <div class="download-button">
+                        <a href="audio/<%= audioFile %>" download>
+                            <i class="fa fa-download"></i>
+                        </a>
                     </div>
                 </div>
-                <% } %>
+
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img"
+         style="background-image: url(img/bg-img/bg-2.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading white">
+                    <p>See what's new</p>
+                    <h2>Get In Touch</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Contact Form Area -->
+                <div class="contact-form-area">
+                    <form action="#" method="post" name="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <input name="name" type="text" class="form-control" id="name"
+                                           placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <input name="email" type="email" class="form-control" id="email"
+                                           placeholder="E-mail">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <input name="subject" type="text" class="form-control" id="subject"
+                                           placeholder="Subject">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                        <textarea name="message" name="message" class="form-control" id="message"
+                                                  cols="30" rows="10" placeholder="Message"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn oneMusic-btn mt-30" type="submit">Send <i
+                                        class="fa fa-angle-double-right"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+</section>
+<!-- ##### Contact Area End ##### -->
 
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact-area section-padding-100 bg-img bg-overlay bg-fixed has-bg-img"
-        style="background-image: url(img/bg-img/bg-2.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading white">
-                        <p>See what's new</p>
-                        <h2>Get In Touch</h2>
-                    </div>
-                </div>
-            </div>
+<!-- ##### Footer Area Start ##### -->
+<footer class="footer-area">
 
-            <div class="row">
-                <div class="col-12">
-                    <!-- Contact Form Area -->
-                    <div class="contact-form-area">
-                        <form action="#" method="post" name="contact-form">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input name="name" type="text" class="form-control" id="name"
-                                            placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="form-group">
-                                        <input name="email" type="email" class="form-control" id="email"
-                                            placeholder="E-mail">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <input name="subject" type="text" class="form-control" id="subject"
-                                            placeholder="Subject">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <textarea name="message" name="message" class="form-control" id="message"
-                                            cols="30" rows="10" placeholder="Message"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button class="btn oneMusic-btn mt-30" type="submit">Send <i
-                                            class="fa fa-angle-double-right"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
+    <div style="text-align: center; background-color: #000;">
+        <img src="icons/icon-pay-01.png" alt="Payment Methods" style="margin-top: 10px;">
+        <img src="icons/icon-pay-02.png" alt="Payment Methods" style="margin-top: 10px;">
+        <img src="icons/icon-pay-03.png" alt="Payment Methods" style="margin-top: 10px;">
+        <img src="icons/icon-pay-04.png" alt="Payment Methods" style="margin-top: 10px;">
+        <img src="icons/icon-pay-05.png" alt="Payment Methods" style="margin-top: 10px;">
+        <p>&copy; 2024 All rights reserved by Phong - Dat - Nam</p>
+    </div>
 
-    <!-- ##### Footer Area Start ##### -->
-    <footer class="footer-area">
+</footer>
 
-        <div style="text-align: center; background-color: #000;">
-            <img src="icons/icon-pay-01.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-02.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-03.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-04.png" alt="Payment Methods" style="margin-top: 10px;">
-            <img src="icons/icon-pay-05.png" alt="Payment Methods" style="margin-top: 10px;">
-            <p>&copy; 2024 All rights reserved by Phong - Dat - Nam</p>
-        </div>
+<!-- ##### Footer Area End ##### -->
 
-    </footer>
+<!-- ##### Feedback Script ##### -->
+<script src="feedback_home.js"></script>
 
-    <!-- ##### Footer Area End ##### -->
-
-    <!-- ##### Feedback Script ##### -->
-    <script src="feedback_home.js"></script>
-
-    <!-- ##### All Javascript Script ##### -->
-    <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="js/bootstrap/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="js/bootstrap/bootstrap.min.js"></script>
-    <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
-    <!-- Active js -->
-    <script src="js/active.js"></script>
+<!-- ##### All Javascript Script ##### -->
+<!-- jQuery-2.2.4 js -->
+<script src="js/jquery/jquery-2.2.4.min.js"></script>
+<!-- Popper js -->
+<script src="js/bootstrap/popper.min.js"></script>
+<!-- Bootstrap js -->
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<!-- All Plugins js -->
+<script src="js/plugins/plugins.js"></script>
+<!-- Active js -->
+<script src="js/active.js"></script>
 
 </body>
 
