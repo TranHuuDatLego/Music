@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2024 lúc 08:44 AM
+-- Thời gian đã tạo: Th10 16, 2024 lúc 04:20 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -32,6 +32,20 @@ CREATE TABLE `comment` (
   `description` text NOT NULL,
   `username` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -93,9 +107,9 @@ INSERT INTO `song` (`song_id`, `title`, `image`, `singer`, `file_name`, `descrip
 (1, 'Hãy trao cho anh', 'hay-trao-cho-anh.jpg', 'Sơn Tùng MTP', 'hay-trao-cho-anh.mp3', '', 21),
 (2, 'Em của ngày hôm qua', 'em-cua-ngay-hom-qua.jpg', 'Sơn Tùng MTP', 'em-cua-ngay-hom-qua.mp3', '', 44),
 (3, 'Making my way', 'making-my-way.jpg', 'Sơn Tùng MTP', 'making-my-way.mp3', '', 60),
-(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3', '', 101),
+(4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3', '', 102),
 (5, 'Sóng gió', 'song-gio.png', 'Jack 97', 'song-gio.mp3', '\"Sóng gió\" là một đĩa đơn của nhà sản xuất âm nhạc người Việt Nam KHÁNH và ca sĩ kiêm sáng tác nhạc, rapper người Việt Nam – Jack – J97 sáng tác và trình bày, được ra mắt vào lúc 20h ngày 12 tháng 7 năm 2019 trên Zing MP3 cùng với một video âm nhạc (MV) trên kênh YouTube của KHÁNH. Sóng gió trở thành một trong những ca khúc thành công nhất trong sự nghiệp của Jack, và là một trong những ca khúc nổi bật nhất năm 2019. Trước đó, teaser của MV này cũng từng lọt top 2 trending YouTube cùng hơn 3 triệu lượt xem. Các từ khóa \"J97\", \"Sóng gió\"... cũng lọt top tìm kiếm trên Google.', 110),
-(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3', '', 36);
+(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3', '', 37);
 
 -- --------------------------------------------------------
 
@@ -132,6 +146,12 @@ ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `favorite`
 --
 ALTER TABLE `favorite`
@@ -163,6 +183,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `contact`
+--
+ALTER TABLE `contact`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

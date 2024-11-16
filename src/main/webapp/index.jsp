@@ -58,8 +58,8 @@
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Timeless Melodies <span>Timeless
                                         Melodies</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="song.jsp"
-                                    class="btn oneMusic-btn mt-50">Discover <i
+                                <a data-animation="fadeInUp" data-delay="500ms" href="discovery.jsp"
+                                    class="btn oneMusic-btn mt-50">This week's top <i
                                         class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>

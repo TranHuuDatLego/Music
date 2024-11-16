@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="musicart.com.musicart.connectDB" %>
 <!-- Import Gson vào -->
 
 <%
@@ -82,37 +84,37 @@
     .text-2xl {
         transition: transform 0.2s ease-in-out;
     }
+    .chart-container {
+        width: 100%; /* Mặc định chiếm 100% chiều rộng của parent */
+        height: 400px; /* Chiều cao cố định */
+        max-width: 1400px; /* Kích thước tối đa */
+        margin: 0 auto; /* Canh giữa */
+    }
 
+    /* Màn hình nhỏ hơn 1400px */
+    @media (max-width: 1400px) {
+        .chart-container {
+            max-width: 1200px;
+        }
+    }
+
+    /* Màn hình nhỏ hơn 768px (điện thoại) */
+    @media (max-width: 768px) {
+        .chart-container {
+            max-width: 100%; /* Chiếm toàn bộ chiều rộng */
+            height: 300px; /* Giảm chiều cao */
+        }
+    }
 </style>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-<div class="flex">
+<div class="flex flex-col md:flex-row">
     <!-- Sidebar -->
-    <div class="w-64 bg-white h-screen shadow-md">
-        <div class="p-4 flex items-center">
-            <img src="https://storage.googleapis.com/a1aa/image/MqM0joCPJiZJNxR2WUzReFAQ6YgfbljjjGAPQjep7spwa5dnA.jpg"
-                 alt="Brick Shop Logo" class="mr-2" width="40" height="40"/>
-            <span class="text-xl font-bold">BRICK SHOP</span>
-        </div>
-        <nav class="mt-10">
-            <a class="flex items-center py-2 px-8 bg-gray-200 text-gray-700" href="#"><i
-                    class="fas fa-tachometer-alt mr-3"></i>Dashboard</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-plus mr-3"></i>Add Music</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-star mr-3"></i>Add singer</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-users mr-3"></i>Manage Users</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-box mr-3"></i>Manage Song</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-comments mr-3"></i>Manage Comment</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-shopping-cart mr-3"></i>Manage Order</a>
-            <a class="flex items-center py-2 px-8 text-gray-700 hover:bg-gray-200" href="#"><i
-                    class="fas fa-tags mr-3"></i>Manage Discount</a>
+    <%
+    // Lấy tên file hiện tại từ URL
+    String currentPage = request.getRequestURI();
+%>
+    <%@ include file="Sidebar.jsp" %>
 
-        </nav>
-    </div>
     <!-- Main Content -->
     <div class="flex-1 p-6">
         <!-- Top Bar -->
@@ -130,7 +132,7 @@
         </div>
         <!-- Dashboard Content -->
         <h1 class="text-2xl font-semibold mb-4">Dashboard</h1>
-        <div class="grid grid-cols-5 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
                 <i class="fa-solid fa-hand-horns text-3xl text-purple-500 mr-4" style="color: #fc4dff;"></i>
                 <div>
@@ -184,7 +186,7 @@
                 stmt = conn.createStatement();
 
                 // Lấy thông tin các bài hát và lượt xem
-                rs = stmt.executeQuery("SELECT title, views FROM Song LIMIT 10"); // Lấy 10 bài hát đầu tiên
+                rs = stmt.executeQuery("SELECT title, views FROM Song ORDER BY RAND() LIMIT 10");
                 int index = 0;
                 while (rs.next()) {
                     songTitles[index] = rs.getString("title");
@@ -201,13 +203,14 @@
         %>
         <!-- Charts -->
         <div class="space-y-6 mb-6">
-          <!-- Biểu đồ Song Views over Time -->
+          <!-- Biểu đồ This week's top hit -->
           <div class="bg-white p-4 rounded-lg shadow-md">
-              <h2 class="text-xl font-semibold mb-4">Song Views over Time</h2>
-              <div class="relative w-1000 h-600">
-                  <canvas id="revenueChart"></canvas>
-              </div>
+              <h2 class="text-xl font-semibold mb-4">This week's top hit</h2>
+              <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
           </div>
+        </div>
 
 
         <!-- Song Table -->
@@ -277,40 +280,40 @@
 </div>
 </div>
 <script>
-    // Truyền dữ liệu từ JSP vào JavaScript
+    // Truyền dữ liệu từ JSP vào JavaScript (VS CODE sẽ hiện lỗi, chạy bình thường)
     const songTitles = <%= new Gson().toJson(songTitles) %>;
     const songViews = <%= new Gson().toJson(songViews) %>;
 
     // Biểu đồ đường với title là trục X, views là trục Y
     const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
     const revenueChart = new Chart(ctxRevenue, {
-        type: 'line',
-        data: {
-            labels: songTitles,  // Trục X là tên bài hát
-            datasets: [{
-                label: 'Listening',  // Đặt label cho dataset
-                data: songViews,  // Dữ liệu là số lượt xem
-                borderColor: 'rgba(75, 192, 192, 1)',  // Màu sắc của đường
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Màu nền cho các điểm
-                fill: false,  // Không tô màu dưới đường
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false, // Cho phép mở rộng biểu đồ
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
+    type: 'bar',
+    data: {
+        labels: songTitles,
+        datasets: [{
+            label: 'Listening',
+            data: songViews,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            maxBarThickness: 50, // Độ dày tối đa của cột
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                beginAtZero: true
+            },
+            y: {
+                beginAtZero: true
             }
         }
-    });
+    }
+});
 
-    // Lấy các giá trị từ JSP và truyền vào JavaScript
+    // Lấy các giá trị từ JSP và truyền vào JavaScript (VS CODE sẽ hiện lỗi, chạy bình thường)
     const data = {
         totalSingers: <%= totalSingers %>,
         totalSongs: <%= totalSongs %>,
