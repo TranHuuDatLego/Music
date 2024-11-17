@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 17, 2024 lúc 09:40 AM
+-- Thời gian đã tạo: Th10 17, 2024 lúc 05:42 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -116,7 +116,12 @@ INSERT INTO `song` (`song_id`, `title`, `image`, `singer`, `file_name`, `descrip
 (3, 'Making my way', 'making-my-way.jpg', 'Sơn Tùng MTP', 'making-my-way.mp3', '', 64),
 (4, 'Đừng làm trái tim anh đau', 'dung-lam-trai-tim-anh-dau.jpg', 'Sơn Tùng MTP', 'dung-lam-trai-tim-anh-dau.mp3', '', 103),
 (5, 'Sóng gió', 'song-gio.png', 'Jack 97', 'song-gio.mp3', '\"Sóng gió\" là một đĩa đơn của nhà sản xuất âm nhạc người Việt Nam KHÁNH và ca sĩ kiêm sáng tác nhạc, rapper người Việt Nam – Jack – J97 sáng tác và trình bày, được ra mắt vào lúc 20h ngày 12 tháng 7 năm 2019 trên Zing MP3 cùng với một video âm nhạc (MV) trên kênh YouTube của KHÁNH. Sóng gió trở thành một trong những ca khúc thành công nhất trong sự nghiệp của Jack, và là một trong những ca khúc nổi bật nhất năm 2019. Trước đó, teaser của MV này cũng từng lọt top 2 trending YouTube cùng hơn 3 triệu lượt xem. Các từ khóa \"J97\", \"Sóng gió\"... cũng lọt top tìm kiếm trên Google.', 117),
-(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3', '', 38);
+(6, 'Bạc Phận', 'bac-phan.jpg', 'Jack 97', 'bac-phan.mp3', '', 38),
+(7, 'Đóm', 'sơ đò.png', 'Jack 97', 'Người theo đuổi ánh sáng - Piano cover - Duet ver.-[AudioTrimmer.com].mp3', 'đóm', 1),
+(8, 'thay lòng', 'uploads/img/sơ đò.png', 'Jack 97', 'uploads/audio/Thay lòng.mp3', 'thay lòng', 0),
+(9, 'thay lòng', 'sơ đò.png', 'Jack 97', 'Thay lòng.mp3', 'thay lòng', 0),
+(10, 'thay lòng', 'sơ đò.png', 'Jack 97', 'Thay lòng.mp3', 'thay lòng', 0),
+(11, 'mây', 'sơ đò.png', 'Jack 97', 'Mây Remix - Jank x Sỹ Tây x Orinn - Mây Hòa Theo Gió Có Người Đơn Phương Remix Hot TikTok.mp3', 'mây', 1);
 
 -- --------------------------------------------------------
 
@@ -214,7 +219,7 @@ ALTER TABLE `singer`
 -- AUTO_INCREMENT cho bảng `song`
 --
 ALTER TABLE `song`
-  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `song_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
