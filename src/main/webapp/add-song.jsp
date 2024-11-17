@@ -40,33 +40,60 @@
         <!-- Add Song Form -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Add Song</h2>
-            <form>
+            <form action="add-song-post.jsp" method="post" enctype="multipart/form-data">
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-gray-700">Title</label>
-                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" placeholder="Enter song title"/>
+                        <input name="title" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" placeholder="Enter song title"/>
                     </div>
                     <div>
                         <label class="block text-gray-700">Singer</label>
-                        <select class="w-full py-2 px-4 rounded-lg border border-gray-300">
+                        <select name="singer" class="w-full py-2 px-4 rounded-lg border border-gray-300">
                             <option>Select singer</option>
-                            <option>Singer 1</option>
-                            <option>Singer 2</option>
-                            <option>Singer 3</option>
+                            <% 
+                                Connection conn = null;
+                                PreparedStatement pstmt = null;
+                                ResultSet rs = null;
+                    
+                                try {
+                                    // Kết nối cơ sở dữ liệu
+                                    conn = connectDB.getConnection();
+                                    
+                                    // Truy vấn tên ca sĩ từ bảng singer
+                                    String query = "SELECT name FROM singer ORDER BY name ASC";
+                                    pstmt = conn.prepareStatement(query);
+                                    rs = pstmt.executeQuery();
+                    
+                                    // Duyệt qua kết quả truy vấn và tạo các option
+                                    while (rs.next()) {
+                                        String singerName = rs.getString("name");
+                            %>
+                            <option value="<%= singerName %>"><%= singerName %></option>
+                            <% 
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace(); // Hiển thị lỗi nếu xảy ra
+                                } finally {
+                                    // Đóng kết nối và các tài nguyên
+                                    if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                                    if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                                    if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                                }
+                            %>
                         </select>
                     </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Description</label>
-                    <textarea class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" placeholder="Enter description"></textarea>
+                    <textarea name="description" class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" placeholder="Enter description"></textarea>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Image</label>
-                    <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
+                    <input name="image" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">File Name</label>
-                    <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
+                    <input name="file" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
                 </div>
                 <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600" type="submit">Add Song</button>
             </form>

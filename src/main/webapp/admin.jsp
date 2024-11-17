@@ -187,7 +187,8 @@
                 stmt = conn.createStatement();
 
                 // Lấy thông tin các bài hát và lượt xem
-                rs = stmt.executeQuery("SELECT song_id, title, image, singer, views FROM song ORDER BY views DESC LIMIT 10");
+                rs = stmt.executeQuery("SELECT title, views FROM Song ORDER BY RAND() LIMIT 10");
+
                 int index = 0;
                 while (rs.next()) {
                     songTitles[index] = rs.getString("title");
@@ -225,49 +226,55 @@
                 </tr>
                 </thead>
                 <tbody>
-                <%
-                    try {
-                        conn = connectDB.getConnection();
-                        stmt = conn.createStatement();
-                        rs = stmt.executeQuery("SELECT song_id, title, image, singer, views 
-                                FROM song
-                                ORDER BY views DESC
-                                LIMIT 10;
-                        ");
-
-                        while (rs.next()) { // Lặp qua từng dòng dữ liệu
-                            String songId = rs.getString("song_id");
-                            String title = rs.getString("title");
-                            String singer = rs.getString("singer");
-                            String image = rs.getString("image");
-                            String views = rs.getString("views");
-                %>
-                <tr class="border-t">
-                    <td class="py-2 flex items-center">
-                        <img src="img/<%= image %>" alt="Song Thumbnail" class="rounded-full mr-2"
-                             width="60" height="60"/>
-                        <div>
-                            <p class="font-semibold"><%= title %>
-                            </p>
-                        </div>
-                    </td>
-                    <td class="py-2"><%= singer %>
-                    </td>
-                    <td class="py-2">
-                        <span class="bg-green-100 text-green-600 py-1 px-3 rounded-full text-xs"><%= views %></span>
-                    </td>
-                </tr>
-                <%
+                    <%
+                        try {
+                            conn = connectDB.getConnection();
+                            stmt = conn.createStatement();
+                            rs = stmt.executeQuery(
+                                "SELECT song_id, title, image, singer, views " +
+                                "FROM song " +
+                                "ORDER BY views DESC " +
+                                "LIMIT 10"
+                            );
+                
+                            int rank = 1; // Khởi tạo thứ hạng
+                            while (rs.next()) { // Lặp qua từng dòng dữ liệu
+                                String songId = rs.getString("song_id");
+                                String title = rs.getString("title");
+                                String singer = rs.getString("singer");
+                                String image = rs.getString("image");
+                                String views = rs.getString("views");
+                    %>
+                    <tr class="border-t">
+                        <!-- Cột Top -->
+                        <td class="py-2 font-semibold"><%= rank %></td>
+                        
+                        <td class="py-2 flex items-center">
+                            <img src="img/<%= image %>" alt="Song Thumbnail" class="rounded-full mr-2"
+                                 width="60" height="60"/>
+                            <div>
+                                <p class="font-semibold"><%= title %>
+                                </p>
+                            </div>
+                        </td>
+                        <td class="py-2"><%= singer %></td>
+                        <td class="py-2">
+                            <span class="bg-green-100 text-green-600 py-1 px-3 rounded-full text-xs"><%= views %></span>
+                        </td>
+                    </tr>
+                    <%
+                                rank++; // Tăng thứ hạng
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (rs != null) rs.close();
+                            if (stmt != null) stmt.close();
+                            if (conn != null) conn.close();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (rs != null) rs.close();
-                        if (stmt != null) stmt.close();
-                        if (conn != null) conn.close();
-                    }
-                %>
+                    %>
                 </tbody>
+                
             </table>
         </div>
 
