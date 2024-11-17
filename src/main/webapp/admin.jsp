@@ -84,6 +84,7 @@
     .text-2xl {
         transition: transform 0.2s ease-in-out;
     }
+
     .chart-container {
         width: 100%; /* Mặc định chiếm 100% chiều rộng của parent */
         height: 400px; /* Chiều cao cố định */
@@ -110,9 +111,9 @@
 <div class="flex flex-col md:flex-row">
     <!-- Sidebar -->
     <%
-    // Lấy tên file hiện tại từ URL
-    String currentPage = request.getRequestURI();
-%>
+        // Lấy tên file hiện tại từ URL
+        String currentPage = request.getRequestURI();
+    %>
     <%@ include file="Sidebar.jsp" %>
 
     <!-- Main Content -->
@@ -186,7 +187,7 @@
                 stmt = conn.createStatement();
 
                 // Lấy thông tin các bài hát và lượt xem
-                rs = stmt.executeQuery("SELECT title, views FROM Song ORDER BY RAND() LIMIT 10");
+                rs = stmt.executeQuery("SELECT song_id, title, image, singer, views FROM song ORDER BY views DESC LIMIT 10");
                 int index = 0;
                 while (rs.next()) {
                     songTitles[index] = rs.getString("title");
@@ -203,13 +204,13 @@
         %>
         <!-- Charts -->
         <div class="space-y-6 mb-6">
-          <!-- Biểu đồ This week's top hit -->
-          <div class="bg-white p-4 rounded-lg shadow-md">
-              <h2 class="text-xl font-semibold mb-4">This week's top hit</h2>
-              <div class="chart-container">
-                <canvas id="revenueChart"></canvas>
+            <!-- Biểu đồ This week's top hit -->
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">This week's top hit</h2>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
             </div>
-          </div>
         </div>
 
 
@@ -228,7 +229,11 @@
                     try {
                         conn = connectDB.getConnection();
                         stmt = conn.createStatement();
-                        rs = stmt.executeQuery("SELECT song_id, title, image, singer, views FROM song");
+                        rs = stmt.executeQuery("SELECT song_id, title, image, singer, views 
+                                FROM song
+                                ORDER BY views DESC
+                                LIMIT 10;
+                        ");
 
                         while (rs.next()) { // Lặp qua từng dòng dữ liệu
                             String songId = rs.getString("song_id");
@@ -287,31 +292,31 @@
     // Biểu đồ đường với title là trục X, views là trục Y
     const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
     const revenueChart = new Chart(ctxRevenue, {
-    type: 'bar',
-    data: {
-        labels: songTitles,
-        datasets: [{
-            label: 'Listening',
-            data: songViews,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-            maxBarThickness: 50, // Độ dày tối đa của cột
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                beginAtZero: true
-            },
-            y: {
-                beginAtZero: true
+        type: 'bar',
+        data: {
+            labels: songTitles,
+            datasets: [{
+                label: 'Listening',
+                data: songViews,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                maxBarThickness: 50, // Độ dày tối đa của cột
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
+    });
 
     // Lấy các giá trị từ JSP và truyền vào JavaScript (VS CODE sẽ hiện lỗi, chạy bình thường)
     const data = {

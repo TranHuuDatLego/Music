@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="musicart.com.musicart.connectDB" %>
 <%@ page import="com.google.gson.Gson" %>
 
 <!DOCTYPE html>
@@ -106,48 +108,88 @@
     </section>
     <!-- ##### Contact Area End ##### -->
 
-    <!-- ##### Contact Area Start ##### -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-heading">
-                        <h1 style="font-size: 48px; font-weight: bold; text-align: center;">Get In Touch</h1>
-                        <p style="font-size: 24px; text-align: center;">Send us a message</p>
-                    </div>
+<!-- ##### Contact Area Start ##### -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h1 style="font-size: 48px; font-weight: bold; text-align: center;">Get In Touch</h1>
+                    <p style="font-size: 24px; text-align: center;">Send us a message</p>
                 </div>
             </div>
+        </div>
         <div class="contact-form-area">
-            <form action="" method="post" name="contact-form">
+            <form action="contact_post.jsp" method="post">
                 <div class="row">
+                    <!-- Name Input -->
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group wow fadeInUp" data-wow-delay="100ms">
-                            <input name="name" type="text" class="form-control" id="name" placeholder="Name">
+                            <input
+                                style="color:#000;"
+                                name="name"
+                                type="text"
+                                class="form-control"
+                                id="name"
+                                placeholder="Name"
+                                required>
                         </div>
                     </div>
+                    <!-- Email Input -->
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group wow fadeInUp" data-wow-delay="200ms">
-                            <input name="email" type="email" class="form-control" id="email" placeholder="E-mail">
+                            <input
+                                style="color:#000;"
+                                name="email"
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                placeholder="E-mail"
+                                required>
                         </div>
                     </div>
+                    <!-- Subject Input -->
                     <div class="col-lg-4">
                         <div class="form-group wow fadeInUp" data-wow-delay="300ms">
-                            <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject">
+                            <input
+                                style="color:#000;"
+                                name="subject"
+                                type="text"
+                                class="form-control"
+                                id="subject"
+                                placeholder="Subject"
+                                required>
                         </div>
                     </div>
+                    <!-- Message Input -->
                     <div class="col-12">
                         <div class="form-group wow fadeInUp" data-wow-delay="400ms">
-                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                            <textarea
+                                style="color:#000;"
+                                name="message"
+                                class="form-control"
+                                id="message"
+                                cols="30"
+                                rows="10"
+                                placeholder="Message"
+                                required></textarea>
                         </div>
                     </div>
+                    <!-- Submit Button -->
                     <div class="col-12 text-center wow fadeInUp" data-wow-delay="500ms">
-                        <button class="btn oneMusic-btn mt-30" type="submit">Send <i class="fa fa-angle-double-right"></i></button>
+                        <button
+                            style="color:#000;"
+                            class="btn oneMusic-btn mt-30"
+                            type="submit">Send <i class="fa fa-angle-double-right"></i>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
-    </section>
-    <!-- ##### Contact Area End ##### -->
+    </div>
+</section>
+<!-- ##### Contact Area End ##### -->
+
 
         <!-- ##### Footer Area Start ##### -->
     <footer class="footer-area">

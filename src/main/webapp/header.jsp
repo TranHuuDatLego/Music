@@ -35,21 +35,34 @@
                             </ul>
 
                             <!-- Login/Register & Cart Button -->
-                            <div class="login-register-cart-button d-flex align-items-center">
-                                <div class="login-register-btn mr-50">
-                                    <%
-                                        String username = (String) session.getAttribute("username");
-                                        if (username != null) {
-                                    %>
-                                        <a href=""> Wecome back, <%= username %>!</a>
-                                    <%
-                                        } else {
-                                    %>
-                                        <a href="login.jsp">Welcome, guest! Please login</a>.
-                                    <%
-                                        }
-                                    %>
-                                </div>
+                            <div class="login-register-btn dropdown">
+                                <%
+                                    String username = (String) session.getAttribute("username");
+                                    if (username != null) {
+                                %>
+                                    <!-- Hiển thị biểu tượng và menu dropdown -->
+                                    <a href="#" class="dropdown-toggle d-flex align-items-center" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span style="color:white; padding-left:15px;">Welcome back, <%= username %>!</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                        <!-- <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <img src="img/core-img/english.png" alt="English Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                            English
+                                        </a>
+                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                            <img src="img/core-img/vietnam.png" alt="Vietnamese Icon" style="width: 20px; height: 20px; margin-right: 8px;">
+                                            Tiếng Việt
+                                        </a> -->
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="logout.jsp">Logout</a>
+                                    </div>
+                                <%
+                                    } else {
+                                %>
+                                    <a style="color:white; padding-left:15px;" href="login.jsp">Welcome, guest! Please login</a>
+                                <%
+                                    }
+                                %>
                             </div>
                         </div>
                         <!-- Nav End -->
