@@ -38,24 +38,24 @@
         <!-- Add Singer Form -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Add Singer</h2>
-            <form>
+            <form action="add-singer-post.jsp" method="post" enctype="multipart/form-data">
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block text-gray-700">Name Singer</label>
-                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" placeholder="Enter singer name"/>
+                        <input name="name" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" placeholder="Enter singer name"/>
                     </div>
                     <div>
                         <label class="block text-gray-700">Age</label>
-                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="number" placeholder="Enter age"/>
+                        <input name="age" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="number" placeholder="Enter age"/>
                     </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Description</label>
-                    <textarea class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" placeholder="Enter description"></textarea>
+                    <textarea name="description" class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" placeholder="Enter description"></textarea>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Image</label>
-                    <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
+                    <input name="image" class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
                 </div>
                 <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600" type="submit">Add Singer</button>
             </form>
