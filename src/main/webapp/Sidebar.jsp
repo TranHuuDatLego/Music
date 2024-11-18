@@ -44,12 +44,6 @@
             <i class="fas fa-box mr-3"></i>Manage Song
         </a>
 
-        <!-- Manage Comment -->
-        <a class="flex items-center py-2 px-8 <% if (currentPage.contains("manage-comment.jsp")) { %>bg-gray-300 text-gray-900<% } else { %>text-gray-700 hover:bg-gray-200<% } %>" 
-           href="manage-comment.jsp">
-            <i class="fas fa-comments mr-3"></i>Manage Comment
-        </a>
-
         <!-- Manage Contact -->
         <a class="flex items-center py-2 px-8 <% if (currentPage.contains("manage-contact.jsp")) { %>bg-gray-300 text-gray-900<% } else { %>text-gray-700 hover:bg-gray-200<% } %>" 
            href="manage-contact.jsp">

@@ -20,6 +20,8 @@ import jakarta.servlet.http.Part;
 public class AddSongServlet extends HttpServlet {
 
     private static final String SAVE_DIR = "audio"; // Thư mục lưu file bài hát
+    private static final String SAVE_DIR2 = "img"; // Thư mục lưu ảnh
+
     private static final String DB_URL = "jdbc:mysql://localhost:3306/musicart";
     private static final String DB_USER = "root"; // Thay bằng user của bạn
     private static final String DB_PASS = ""; // Thay bằng mật khẩu của bạn
@@ -27,46 +29,58 @@ public class AddSongServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy dữ liệu từ form
         String title = request.getParameter("title");
         String singer = request.getParameter("singer");
         String description = request.getParameter("description");
-        Part filePart = request.getPart("file"); // Tệp bài hát
+        Part audioPart = request.getPart("file");
+        Part imagePart = request.getPart("image");
 
-        String fileName = extractFileName(filePart);
-        String savePath = getServletContext().getRealPath("") + File.separator + SAVE_DIR;
+        String audioFileName = extractFileName(audioPart);
+        String imageFileName = extractFileName(imagePart);
 
-        // Tạo thư mục nếu chưa tồn tại
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
+        String audioSavePath = getServletContext().getRealPath("") + File.separator + SAVE_DIR;
+        String imageSavePath = getServletContext().getRealPath("") + File.separator + SAVE_DIR2;
+
+        File audioDir = new File(audioSavePath);
+        if (!audioDir.exists()) {
+            audioDir.mkdir();
+        }
+
+        File imageDir = new File(imageSavePath);
+        if (!imageDir.exists()) {
+            imageDir.mkdir();
         }
 
         try {
-            // Lưu file bài hát vào thư mục webapp/songs
-            String filePath = savePath + File.separator + fileName;
-            filePart.write(filePath);
+            String audioFilePath = audioSavePath + File.separator + audioFileName;
+            audioPart.write(audioFilePath);
 
-            // Lưu thông tin vào cơ sở dữ liệu
+            String imageFilePath = imageSavePath + File.separator + imageFileName;
+            imagePart.write(imageFilePath);
+
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
-                String sql = "INSERT INTO song (title, singer, description, file_name) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO song (title, singer, description, file_name, image, views) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setString(1, title);
                 statement.setString(2, singer);
                 statement.setString(3, description);
-                statement.setString(4, fileName); // Đường dẫn tương đối tới file bài hát
+                statement.setString(4, audioFileName);
+                statement.setString(5, imageFileName);
+                statement.setInt(6, 0);
 
                 int rowsInserted = statement.executeUpdate();
                 if (rowsInserted > 0) {
-                    response.getWriter().println("Song added successfully!");
-                }
+                    response.setContentType("text/html;charset=UTF-8");
+                    response.getWriter().println("<h3>Song added successfully!</h3>");
+                    response.getWriter().println("<p>Audio file saved as: " + audioFileName + "</p>");
+                    response.getWriter().println("<p>Image file saved as: " + imageFileName + "</p>");
+                    
             }
         } catch (Exception e) {
             response.getWriter().println("Error: " + e.getMessage());
         }
     }
 
-    // Hàm lấy tên file từ Part
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         for (String content : contentDisp.split(";")) {
@@ -74,6 +88,6 @@ public class AddSongServlet extends HttpServlet {
                 return content.substring(content.indexOf("=") + 2, content.length() - 1);
             }
         }
-        return "default.mp3"; // Tên file mặc định nếu không tìm thấy
+        return "default.mp3";
     }
 }

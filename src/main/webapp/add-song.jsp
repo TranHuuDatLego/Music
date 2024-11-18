@@ -25,17 +25,7 @@
     <!-- Main Content -->
     <div class="flex-1 p-6">
         <!-- Top Bar -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="relative w-1/2">
-                <input class="w-full py-2 px-4 rounded-lg border border-gray-300" placeholder="Search for projects" type="text"/>
-                <i class="fas fa-search absolute top-3 right-3 text-gray-400"></i>
-            </div>
-            <div class="flex items-center space-x-4">
-                <i class="fas fa-moon text-gray-600"></i>
-                <i class="fas fa-bell text-gray-600"></i>
-                <i class="fas fa-user-circle text-gray-600"></i>
-            </div>
-        </div>
+        <%@ include file="topbar.jsp" %>
         
         <!-- Add Song Form -->
         <div class="bg-white p-6 rounded-lg shadow-md">

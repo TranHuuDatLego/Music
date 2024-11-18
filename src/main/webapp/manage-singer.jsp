@@ -23,18 +23,9 @@
     <%@ include file="Sidebar.jsp" %>
     <!-- Main Content -->
     <div class="flex-1 p-6">
+
         <!-- Top Bar -->
-        <div class="flex justify-between items-center mb-6">
-            <div class="relative w-1/2">
-                <input class="w-full py-2 px-4 rounded-lg border border-gray-300" placeholder="Search for projects" type="text"/>
-                <i class="fas fa-search absolute top-3 right-3 text-gray-400"></i>
-            </div>
-            <div class="flex items-center space-x-4">
-                <i class="fas fa-moon text-gray-600"></i>
-                <i class="fas fa-bell text-gray-600"></i>
-                <i class="fas fa-user-circle text-gray-600"></i>
-            </div>
-        </div>
+        <%@ include file="topbar.jsp" %>
         
         <!-- Manage Singer Table -->
         <div class="bg-white p-6 rounded-lg shadow-md">
@@ -59,125 +50,68 @@
                     <th class="py-2">
                         Description
                     </th>
-                    <th class="py-2">
+                    <th style="padding-left: 15px;" class="py-2">
                         Action
                     </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="border-t">
-                    <td class="py-2">
-                        1
-                    </td>
-                    <td class="py-2">
-                        Singer 1
-                    </td>
-                    <td class="py-2">
-                        <img alt="Singer Image 1" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/0A9BFaxxBh50OxgspRyjGuzjtnhyYq4NNJvHaAVySEpr7Y8E.jpg" width="40"/>
-                    </td>
-                    <td class="py-2">
-                        25
-                    </td>
-                    <td class="py-2">
-                        Description of singer 1
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                <tr class="border-t">
-                    <td class="py-2">
-                        2
-                    </td>
-                    <td class="py-2">
-                        Singer 2
-                    </td>
-                    <td class="py-2">
-                        <img alt="Singer Image 2" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/aYx1LGjXByKHHJ4wPAVjJ1Rvfp4vSKbzpfTVPxDXSI3wujxTA.jpg" width="40"/>
-                    </td>
-                    <td class="py-2">
-                        30
-                    </td>
-                    <td class="py-2">
-                        Description of singer 2
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                <!-- Add more rows as needed -->
+                    <%
+                        Connection conn = null;
+                        PreparedStatement stmt = null;
+                        ResultSet rs = null;
+                
+                        try {
+                            // Kết nối cơ sở dữ liệu
+                            conn = connectDB.getConnection(); // Phương thức lấy kết nối từ class connectDB của bạn
+                
+                            // Truy vấn bảng singer
+                            String sql = "SELECT singer_id, name, age, image, description FROM singer";
+                            stmt = conn.prepareStatement(sql);
+                            rs = stmt.executeQuery();
+                
+                            // Lặp qua từng dòng trong kết quả
+                            while (rs.next()) {
+                                int singerId = rs.getInt("singer_id");
+                                String name = rs.getString("name");
+                                int age = rs.getInt("age");
+                                String image = rs.getString("image");
+                                String description = rs.getString("description");
+                    %>
+                                <tr class="border-t">
+                                    <td class="py-2"><%= singerId %></td>
+                                    <td class="py-2"><%= name %></td>
+                                    <td class="py-2">
+                                        <img alt="Singer Image" class="h-10 w-10 rounded-full" 
+                                             height="40" src="img/<%= image %>" width="60"/>
+                                    </td>
+                                    <td class="py-2"><%= age %></td>
+                                    <td style="max-width: 350px;" class="py-2"><%= description %></td>
+                                    <td style="padding-left: 15px;" class="py-2">
+                                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
+                                            Edit
+                                        </button>
+                                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                    <%
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            // Đóng kết nối
+                            if (rs != null) rs.close();
+                            if (stmt != null) stmt.close();
+                            if (conn != null) conn.close();
+                        }
+                    %>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    // Revenue Line Chart
-    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(ctxRevenue, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Revenue',
-                data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
-    // Best Seller Pie Chart
-    const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
-    const bestSellerChart = new Chart(ctxBestSeller, {
-        type: 'pie',
-        data: {
-            labels: ['Product A', 'Product B', 'Product C', 'Product D'],
-            datasets: [{
-                label: 'Best Seller',
-                data: [300, 50, 100, 150],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-</script>
 </body>
 </html>
