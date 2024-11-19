@@ -14,103 +14,87 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
-<div class="flex flex-col md:flex-row"">
+    <div class="flex flex-col md:flex-row">
             <!-- Sidebar -->
-    <%
-    // Lấy tên file hiện tại từ URL
-    String currentPage = request.getRequestURI();
-%>
-    <%@ include file="Sidebar.jsp" %>
-    <!-- Main Content -->
-    <div class="flex-1 p-6">
-        <!-- Top Bar -->
-        <%@ include file="topbar.jsp" %>
-        
-        <!-- Edit Singer Form -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">Edit Singer</h2>
-            <form>
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
+            <%
+            // Lấy tên file hiện tại từ URL
+            String currentPage = "manage-singer.jsp";
+        %>
+            <%@ include file="Sidebar.jsp" %>
+    
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Top Bar -->
+            <%@ include file="topbar.jsp" %>
+    
+            <!-- Edit Singer Form -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Edit Singer</h2>
+    
+                <%
+                    String singerId = request.getParameter("id");
+                    String query = "SELECT * FROM singer WHERE singer_id = ?";
+                    Connection conn = null;
+                    PreparedStatement pstmt = null;
+                    ResultSet rs = null;
+    
+                    try {
+                        conn = connectDB.getConnection(); // Kết nối database
+                        pstmt = conn.prepareStatement(query);
+                        pstmt.setString(1, singerId);
+                        rs = pstmt.executeQuery();
+    
+                        if (rs.next()) {
+                            String name = rs.getString("name");
+                            int age = rs.getInt("age");
+                            String description = rs.getString("description");
+                            String image = rs.getString("image");
+                %>
+                <form action="edit-singer" method="POST">
+                    <input type="hidden" name="singer_id" value="<%= singerId %>"/>
+                    <div class="mb-4">
                         <label class="block text-gray-700">Name</label>
-                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" placeholder="Enter singer name" value="Singer 1"/>
+                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" name="name"
+                               value="<%= name %>" required/>
                     </div>
-                    <div>
+                    <div class="mb-4">
                         <label class="block text-gray-700">Age</label>
-                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="number" placeholder="Enter age" value="25"/>
+                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="number" name="age"
+                               value="<%= age %>" required/>
                     </div>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Description</label>
-                    <textarea class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" placeholder="Enter description">Description of singer 1</textarea>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700">Image</label>
-                    <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="file"/>
-                    <img alt="Singer Image 1" class="h-20 w-20 rounded-full mt-4" height="80" src="https://storage.googleapis.com/a1aa/image/0A9BFaxxBh50OxgspRyjGuzjtnhyYq4NNJvHaAVySEpr7Y8E.jpg" width="80"/>
-                </div>
-                <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600" type="submit">Save Changes</button>
-            </form>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Description</label>
+                        <textarea class="w-full py-2 px-4 rounded-lg border border-gray-300" rows="4" name="description"
+                                  required><%= description %></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Image URL</label>
+                        <input class="w-full py-2 px-4 rounded-lg border border-gray-300" type="text" name="image"
+                               value="<%= image %>" required/>
+                        <img alt="Singer Image" class="h-20 w-20 rounded-full mt-4" height="80"
+                             src="img<%= image %>" width="80"/>
+                    </div>
+                    <button class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600" type="submit">
+                        Save Changes
+                    </button>
+                </form>
+                <%
+                        } else {
+                %>
+                <p class="text-red-500">Singer not found!</p>
+                <%
+                        }
+                    } catch (Exception e) {
+                        out.println("<p class='text-red-500'>Error: " + e.getMessage() + "</p>");
+                    } finally {
+                        if (rs != null) rs.close();
+                        if (pstmt != null) pstmt.close();
+                        if (conn != null) conn.close();
+                    }
+                %>
+            </div>
         </div>
     </div>
-</div>
-<script>
-    // Revenue Line Chart
-    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(ctxRevenue, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Revenue',
-                data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
-    // Best Seller Pie Chart
-    const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
-    const bestSellerChart = new Chart(ctxBestSeller, {
-        type: 'pie',
-        data: {
-            labels: ['Product A', 'Product B', 'Product C', 'Product D'],
-            datasets: [{
-                label: 'Best Seller',
-                data: [300, 50, 100, 150],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-</script>
 </body>
 </html>

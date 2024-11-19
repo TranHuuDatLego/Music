@@ -132,6 +132,11 @@ if (id != null) {
                         Your browser does not support the audio element.
                     </audio>
                 </div>
+                <div class="download-button">
+                    <a href="audio/<%= file_name %>" download>
+                        <i class="fa fa-download"></i>
+                    </a>
+                </div>
             </div>
         </div>
             <%

@@ -88,12 +88,15 @@
                                     <td class="py-2"><%= age %></td>
                                     <td style="max-width: 350px;" class="py-2"><%= description %></td>
                                     <td style="padding-left: 15px;" class="py-2">
-                                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
+                                        <!-- <a href="edit-singer.jsp?id=<%= singerId %>"><button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
                                             Edit
-                                        </button>
-                                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
+                                        </a>
+                                        </button> -->
+                                        <a href="delete-singer?id=<%= singerId %>"><button onsubmit="return confirm('Are you sure you want to delete this singer?');"
+                                        class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
                                             Delete
                                         </button>
+                                    </a>
                                     </td>
                                 </tr>
                     <%

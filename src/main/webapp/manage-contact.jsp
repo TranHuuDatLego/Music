@@ -33,132 +33,58 @@
             </h2>
             <table class="w-full">
                 <thead>
-                <tr class="text-left text-gray-600">
-                    <th class="py-2">
-                        Name
-                    </th>
-                    <th class="py-2">
-                        Email
-                    </th>
-                    <th class="py-2">
-                        Subject
-                    </th>
-                    <th class="py-2">
-                        Message
-                    </th>
-                    <th class="py-2">
-                        Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
+                    <%
+                    Connection conn = null;
+                    PreparedStatement stmt = null;
+                    ResultSet rs = null;
+                
+                    try {
+                        conn = connectDB.getConnection(); // Kết nối tới database
+                        String sql = "SELECT id, name, email, subject, message FROM contact";
+                        stmt = conn.prepareStatement(sql);
+                        rs = stmt.executeQuery();
+                
+                        while (rs.next()) {
+                            int id = rs.getInt("id");
+                            String name = rs.getString("name");
+                            String email = rs.getString("email");
+                            String subject = rs.getString("subject");
+                            String message = rs.getString("message");
+                %>
                 <tr class="border-t">
+                    <td class="py-2"><%= name %></td>
+                    <td class="py-2"><%= email %></td>
+                    <td class="py-2"><%= subject %></td>
+                    <td class="py-2"><%= message %></td>
                     <td class="py-2">
-                        John Doe
-                    </td>
-                    <td class="py-2">
-                        john@example.com
-                    </td>
-                    <td class="py-2">
-                        Inquiry
-                    </td>
-                    <td class="py-2">
-                        This is a message from John Doe.
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
+                        <!-- <a href="edit-contact.jsp?id=<%= id %>">
+                            <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
+                                Edit
+                            </button>
+                        </a> -->
+                        <a href="delete-contact.jsp?id=<%= id %>" onclick="return confirm('Are you sure you want to delete this contact?');">
+                            <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
+                                Delete
+                            </button>
+                        </a>
                     </td>
                 </tr>
-                <tr class="border-t">
-                    <td class="py-2">
-                        Jane Smith
-                    </td>
-                    <td class="py-2">
-                        jane@example.com
-                    </td>
-                    <td class="py-2">
-                        Feedback
-                    </td>
-                    <td class="py-2">
-                        This is a message from Jane Smith.
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
+                <%
+                        }
+                    } catch (Exception e) {
+                        out.println("<p>Error: " + e.getMessage() + "</p>");
+                    } finally {
+                        if (rs != null) rs.close();
+                        if (stmt != null) stmt.close();
+                        if (conn != null) conn.close();
+                    }
+                %>
                 <!-- Add more rows as needed -->
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    // Revenue Line Chart
-    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(ctxRevenue, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Revenue',
-                data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
-    // Best Seller Pie Chart
-    const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
-    const bestSellerChart = new Chart(ctxBestSeller, {
-        type: 'pie',
-        data: {
-            labels: ['Product A', 'Product B', 'Product C', 'Product D'],
-            datasets: [{
-                label: 'Best Seller',
-                data: [300, 50, 100, 150],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-</script>
 </body>
 </html>

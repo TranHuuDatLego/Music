@@ -28,128 +28,70 @@
         
         <!-- Manage User Table -->
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-semibold mb-4">
-                Manage User
-            </h2>
-            <table class="w-full">
+            <h2 class="text-2xl font-bold mb-6">Manage Users</h2>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <table class="w-full border-collapse border border-gray-300">
                 <thead>
                 <tr class="text-left text-gray-600">
-                    <th class="py-2">
-                        ID
-                    </th>
-                    <th class="py-2">
-                        Username
-                    </th>
-                    <th class="py-2">
-                        Email
-                    </th>
-                    <th class="py-2">
-                        Action
-                    </th>
+                    <th class="border py-2 px-4">ID</th>
+                    <th class="border py-2 px-4">Username</th>
+                    <th class="border py-2 px-4">Email</th>
+                    <th class="border py-2 px-4">Role</th>
+                    <th class="border py-2 px-4">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
+                <%
+                    Connection conn = null;
+                    PreparedStatement stmt = null;
+                    ResultSet rs = null;
+
+                    try {
+                        // Kết nối cơ sở dữ liệu
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/musicart", "root", ""); // Thay username/password tương ứng
+
+                        // Truy vấn dữ liệu từ bảng user
+                        String sql = "SELECT id, username, email, role FROM user";
+                        stmt = conn.prepareStatement(sql);
+                        rs = stmt.executeQuery();
+
+                        // Duyệt qua các hàng dữ liệu và hiển thị
+                        while (rs.next()) {
+                            int userId = rs.getInt("id");
+                            String username = rs.getString("username");
+                            String email = rs.getString("email");
+                            String role = rs.getString("role");
+                %>
                 <tr class="border-t">
+                    <td class="border py-2 px-4"><%= userId %></td>
+                    <td class="border py-2 px-4"><%= username %></td>
+                    <td class="border py-2 px-4"><%= email %></td>
+                    <td class="border py-2 px-4"><%= role %></td>
                     <td class="py-2">
-                        1
-                    </td>
-                    <td class="py-2">
-                        user1
-                    </td>
-                    <td class="py-2">
-                        user1@example.com
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
+                        <a href="delete-user.jsp?id=<%= userId %>">
+                            <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                                    onclick="return confirm('Are you sure you want to delete this user?');">
+                                Delete
+                            </button>
+                        </a>
                     </td>
                 </tr>
-                <tr class="border-t">
-                    <td class="py-2">
-                        2
-                    </td>
-                    <td class="py-2">
-                        user2
-                    </td>
-                    <td class="py-2">
-                        user2@example.com
-                    </td>
-                    <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                            Edit
-                        </button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                <!-- Add more rows as needed -->
+                <%
+                        }
+                    } catch (Exception e) {
+                        out.println("<p>Error: " + e.getMessage() + "</p>");
+                    } finally {
+                        if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+                        if (stmt != null) try { stmt.close(); } catch (SQLException ignored) {}
+                        if (conn != null) try { conn.close(); } catch (SQLException ignored) {}
+                    }
+                %>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    // Revenue Line Chart
-    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
-    const revenueChart = new Chart(ctxRevenue, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Revenue',
-                data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: true,
-                tension: 0.1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
-    // Best Seller Pie Chart
-    const ctxBestSeller = document.getElementById('bestSellerChart').getContext('2d');
-    const bestSellerChart = new Chart(ctxBestSeller, {
-        type: 'pie',
-        data: {
-            labels: ['Product A', 'Product B', 'Product C', 'Product D'],
-            datasets: [{
-                label: 'Best Seller',
-                data: [300, 50, 100, 150],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-</script>
 </body>
 </html>

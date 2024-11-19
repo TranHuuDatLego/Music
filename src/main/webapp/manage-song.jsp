@@ -83,9 +83,14 @@
                     <td class="py-2"><%= views %>
                     </td>
                     <td class="py-2">
-                        <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">Edit</button>
-                        <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">Delete</button>
+                        <a href="delete-song.jsp?id=<%= songId %>">
+                            <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                                    onclick="return confirm('Are you sure you want to delete this song?');">
+                                Delete
+                            </button>
+                        </a>
                     </td>
+                    
                 </tr>
                 <%
                         }

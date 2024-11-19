@@ -74,10 +74,14 @@ public class AddSongServlet extends HttpServlet {
                     response.getWriter().println("<h3>Song added successfully!</h3>");
                     response.getWriter().println("<p>Audio file saved as: " + audioFileName + "</p>");
                     response.getWriter().println("<p>Image file saved as: " + imageFileName + "</p>");
-                    
+                }
+            } catch (Exception e) {
+                response.setContentType("text/html;charset=UTF-8");
+                response.getWriter().println("Database error: " + e.getMessage());
             }
         } catch (Exception e) {
-            response.getWriter().println("Error: " + e.getMessage());
+            response.setContentType("text/html;charset=UTF-8");
+            response.getWriter().println("File upload error: " + e.getMessage());
         }
     }
 
@@ -90,4 +94,5 @@ public class AddSongServlet extends HttpServlet {
         }
         return "default.mp3";
     }
+
 }

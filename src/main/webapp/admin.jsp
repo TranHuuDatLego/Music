@@ -41,7 +41,7 @@
         }
 
         // Lấy tổng số comments
-        rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM Comment");
+        rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM Contact");
         if (rs.next()) {
             totalComments = rs.getInt("total");
         }
@@ -158,7 +158,7 @@
             <div class="bg-white p-4 rounded-lg shadow-md flex items-center">
                 <i class="fa-solid fa-comment-music text-3xl text-purple-500 mr-4" style="color: #74C0FC;"></i>
                 <div>
-                    <p class="text-gray-600">Comments</p>
+                    <p class="text-gray-600">Contacts</p>
                     <p class="text-2xl font-bold" id="counter-comments"><%= totalComments %>
                     </p>
                 </div>
