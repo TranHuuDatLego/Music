@@ -57,11 +57,11 @@
                     <td class="py-2"><%= subject %></td>
                     <td class="py-2"><%= message %></td>
                     <td class="py-2">
-                        <!-- <a href="edit-contact.jsp?id=<%= id %>">
-                            <button class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600">
-                                Edit
+                        <a href="edit-contact.jsp?id=<%= id %>">
+                            <button class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600">
+                                Accept
                             </button>
-                        </a> -->
+                        </a>
                         <a href="delete-contact.jsp?id=<%= id %>" onclick="return confirm('Are you sure you want to delete this contact?');">
                             <button class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
                                 Delete

@@ -207,9 +207,17 @@
 %>
             <div class="result">
                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h2 style="text-align:center" class="text-lg font-bold mb-4 text-gray-800">
-                        Search Results
-                    </h2>
+                    <%
+                        // Xác định loại tìm kiếm và hiển thị thông báo
+                        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+                            String searchType = searchSong ? "song" : "singer";
+                    %>
+                    <div style="text-align:center; font-size:16px; margin-bottom: 20px;">
+                        Search "<strong><%= searchKeyword %></strong>" by <strong><%= searchType %></strong>
+                    </div>
+                    <%
+                        }
+                    %>
                     <table style="width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 16px; font-family: Arial, sans-serif;">
                         <thead>
                             <tr style="background-color: #f4f4f4; text-align: left; color: #333;">

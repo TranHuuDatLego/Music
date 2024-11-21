@@ -20,7 +20,15 @@
     <link rel="stylesheet" href="css/style.css">
 
 </head>
+<style>
+    .event-thumbnail img {
+        width: 100%; /* Chiều rộng bằng với container */
+        height: 300px; /* Chiều cao cố định */
+        object-fit: cover; /* Giữ tỷ lệ ảnh và cắt phần thừa */
+        border-radius: 10px; /* Bo góc nếu cần */
+    }
 
+</style>
 <body>
     <!-- Preloader -->
     <div class="preloader d-flex align-items-center justify-content-center">
